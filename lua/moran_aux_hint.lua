@@ -29,7 +29,6 @@ function Module.func(translation, env)
    for cand in translation:iter() do
       if cand.type == "punct" then
          yield(cand)
-         goto continue
       end
 
       local gcand = cand:get_genuine()
@@ -42,7 +41,6 @@ function Module.func(translation, env)
 
       local codes = env.aux_table[utf8.codepoint(cand_text)]
       if not codes then
-         yield(cand)
          goto continue
       end
       local codes_str = table.concat(codes, " ")

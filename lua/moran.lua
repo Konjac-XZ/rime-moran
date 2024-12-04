@@ -1,5 +1,3 @@
----@dependency zrmdb.txt
-
 local Module = {}
 
 ---Load zrmdb.txt bundled with the standard Moran distribution.
@@ -10,14 +8,8 @@ function Module.load_zrmdb()
    end
    local aux_table = {}
    local pathsep = (package.config or '/'):sub(1, 1)
-   local filename = 'zrmdb.txt'
-   local path = rime_api.get_user_data_dir() .. pathsep .. "lua" .. pathsep .. filename
-   local file = io.open(path) or io.open("/rime/lua/" .. filename)
-   if not file then
-      log.error("moran: failed to open aux file at path " .. path)
-      return
-   end
-   for line in file:lines() do
+   local path = rime_api.get_user_data_dir() .. pathsep .. "lua" .. pathsep .. "zrmdb.txt"
+   for line in io.open(path):lines() do
       line = line:match("[^\r\n]+")
       local key, value = line:match("(.+) (.+)")
       key = utf8.codepoint(key)
@@ -28,7 +20,6 @@ function Module.load_zrmdb()
          table.insert(aux_table[key], value)
       end
    end
-   file:close()
    Module.aux_table = aux_table
    return Module.aux_table
 end
@@ -93,7 +84,7 @@ end
 
 ---Get a stateful iterator of each unicode character in a string.
 ---@param word string
----@return function():(number,string)?
+---@return function():string?
 function Module.chars(word)
    local f, s, i = utf8.codes(word)
    local value = nil
@@ -107,50 +98,23 @@ function Module.chars(word)
    end
 end
 
----Get a stateful iterator of each unicode codepoint in a string
----@param word string
----@return function():number?
-function Module.codepoints(word)
-    local f, s, i = utf8.codes(word)
-    local value = nil
-    return function()
-        i, value = f(s, i)
-        if i then
-            return i, value
-        else
-            return nil
-        end
-    end
-end
-
----Return true if @str is purely Chinese.
----@param str str
----@return boolean
-function Module.str_is_chinese(str)
-   for _, cp in Module.codepoints(str) do
-      if not Module.unicode_code_point_is_chinese(cp) then
-         return false
-      end
-   end
-   return true
-end
-
----Take_while but with a limit.
+---Take elements from a stateful iterator, until the predicate returns true, or reaches the limit.
 ---@generic T
 ---@param iter function():T?
 ---@param pred function(T):boolean
 ---@param limit integer
----@return table<T>
-function Module.peekable_iter_take_while_upto(iter, limit, pred)
-   local ret = {}
-   for _ = 1, limit do
-      if iter:peek() and pred(iter:peek()) then
-         table.insert(ret, iter())
+---@return table<T>,T? 
+function Module.iter_take_until_upto(iter, pred, limit)
+   local stash = {}
+   for _ in 1, limit do
+      local cur = iter()
+      if cur == nil or pred(cur) then
+         return stash, cur
       else
-         break
+         table.insert(stash, cur)
       end
    end
-   return ret
+   return stash, nil
 end
 
 ---Create a singleton stateful iterator.
@@ -218,174 +182,41 @@ end
 ---@param tbl table<K,V>
 ---@return function():V the stateful iterator
 function Module.iter_table_values(tbl)
-   local cur = next(tbl, nil)
-   return function()
-      if cur == nil then
-         return nil
-      else
-         local ret = cur
-         cur = next(tbl, cur)
-         return ret
-      end
-   end
+    local cur = next(tbl, nil)
+    return function()
+        if cur == nil then
+            return nil
+        else
+            local ret = cur
+            cur = next(tbl, cur)
+            return ret
+        end
+    end
+end
+
+---Peek an element from an iterator
+---@generic T
+---@param iter function():T?
+---@return T?,function():T? the (possibly) first element in iter, and a new iterator that returns the same sequence as if iter was never peeked
+function Module.iter_peek(iter)
+    local el = iter()
+    local done = false
+    return el, function()
+        if not done then
+            done = true
+            return el
+        else
+            return iter()
+        end
+    end
 end
 
 ---Yield all candidates in an iterator.
 ---@param iter function():Candidate a stateful iterator
 function Module.yield_all(iter)
-   for c in iter do
-      yield(c)
-   end
-end
-
-local Yielder = {}
-Yielder.__index = Yielder
-
-function Yielder.new(before_cb, after_cb)
-   local instance = {
-      stash = {}, -- map<Index, list<Candidate>>
-      index = 0,
-      before_cb = before_cb, -- function(number,Cand): number?, 在準備 yield 前讓用戶檢查一次，如果不應該此時 yield，則返回一個 defer 數字
-      after_cb = after_cb  -- 真正 yield 後通知用戶
-   }
-   setmetatable(instance, Yielder)
-   return instance
-end
-
----原始輸出函數
----@param value Candidate
----@return table 新得到的應該輸出的 deferred value
-function Yielder:__yield(value)
-   local last_minute_defer = self.before_cb and self.before_cb(self.index, value)
-   if last_minute_defer == nil or last_minute_defer <= 0 then
-      yield(value)
-      if self.after_cb then
-         self.after_cb(self.index, value)
-      end
-      self.index = self.index + 1
-      local retval = self.stash[self.index]
-      self.stash[self.index] = nil
-      return retval
-   else
-      self:yield_defer(value, last_minute_defer)
-   end
-end
-
--- 在翻譯開始時重置內部狀態。
-function Yielder:reset()
-   self.stash = {}
-   self.index = 0
-end
-
----輸出 value，同時可能會輸出之前被延遲的value，導致輸出不止一個結果。
----@param value Candidate
-function Yielder:yield(value)
-   local worklist = {value}
-   local i = 1
-   while i <= #worklist do
-      local new_yields = self:__yield(worklist[i])
-      if new_yields then
-         for j = 1, #new_yields do
-            worklist[#worklist + 1] = new_yields[j]
-         end
-      end
-      i = i + 1
-   end
-end
-
-function Yielder:yield_defer(value, delta)
-   if delta <= 0 then
-      self:yield(value)
-   else
-      local index = self.index + delta
-      if self.stash[index] == nil then
-         self.stash[index] = { value }
-      else
-         table.insert(self.stash[index], value)
-      end
-   end
-end
-
-function Yielder:yield_all(iter)
-   for c in iter do
-      self:yield(c)
-   end
-end
-
---- 依次輸出所有被延遲的value，並清空它們。
-function Yielder:clear()
-   for _, deferred_list in pairs(self.stash) do
-      for _, elem in pairs(deferred_list) do
-         yield(elem)
-      end
-   end
-   self.stash = {}
-end
-
-Module.Yielder = Yielder
-
----Make a function-based stateful iterator peekable.
----Returns a callable object that has two methods 'peek' and 'next'.
----Calling the object is equivalent to call 'next' on it.
-function Module.make_peekable(f)
-   local it = {
-      peeked = false,
-      peek_val = nil,
-   }
-   function it:peek()
-      if self.peeked then
-         return self.peek_val
-      else
-         self.peek_val = f()
-         self.peeked = true
-         return self.peek_val
-      end
-   end
-
-   function it:next()
-      return it()
-   end
-
-   local mt = {
-      __call = function(self)
-         if self.peeked then
-            self.peeked = false
-            local ret = self.peek_val
-            self.peek_val = nil
-            return ret
-         else
-            return f()
-         end
-      end
-   }
-   setmetatable(it, mt)
-   return it
-end
-
----Get a bool-typed config value with default value.
----Due to nil and false both being falsy, 'or' shouldn't be used.
-function Module.get_config_bool(env, key, deflt)
-   local val = env.engine.schema.config:get_bool(key)
-   if val == nil then
-      return deflt
-   end
-   return val
-end
-
-function Module.map(tbl, f)
-    local ret = {}
-    for k, v in pairs(tbl) do
-        ret[k] = f(v)
+    for c in iter do
+        yield(c)
     end
-    return ret
-end
-
-function Module.rstrip(s, suffix)
-   if s:sub(-#suffix) == suffix then
-      return s:sub(1, -#suffix - 1)
-   else
-      return s
-   end
 end
 
 return Module

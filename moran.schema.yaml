@@ -107,7 +107,7 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/;
+  alphabet: abcdefghijklmnopqrstuvwxyz/;
   delimiter: " '"
   auto_select: true
   auto_select_pattern: ^;(\w+|;)
@@ -290,9 +290,10 @@ reverse_tick:
 
 reverse_lookup:
   extra_tags:
-    - reverse_tick
-    - reverse_universal
+    # - reverse_tick
+    # - reverse_universal
     - reverse_tiger
+    # - reverse_universal
     - reverse_stroke
     - reverse_cangjie5
     - reverse_zrlf
@@ -309,6 +310,7 @@ key_binder:
   bindings:
     __patch:
       - :/key_binder/custom_bindings?
+      - moran:/key_bindings/moran_capital_for_last_syllable
       - moran:/key_bindings/moran_tab
       - moran:/key_bindings/moran_switches
       - moran:/key_bindings/moran_keypad
@@ -333,8 +335,7 @@ recognizer:
     # CAVEAT: ^o 只保留 ^ou 和 ^o$，避免反查被干擾
     has_emoji: '(^[a-np-z][a-z/]*$)|(^[a-z]$)|(^ou[a-z/]*$)'
     # ojp 引導日語輸入
-    japanese_o: '(^ojp[a-z]*$)'
-
+    japanese_o: '^ojp[a-z]*$'
 recognizer_secondary:
   patterns:
     # {4} 表示輸入長度達到 4 後開始輸出英語
@@ -383,7 +384,7 @@ moran:
 
   # 輸入四碼時，如果簡碼碼表中含有對應條目，則放置在第二選項。
   show_chars_anyway: false   # 是否輸出簡碼碼表單字，例：輸入 jwrg 時，次選爲「佳」
-  show_words_anyway: true   # 是否輸出簡碼碼表詞語，例：輸入 lmsd 時，次選爲「兩面三刀」
+  show_words_anyway: false   # 是否輸出簡碼碼表詞語，例：輸入 lmsd 時，次選爲「兩面三刀」
 
   # 「置頂」功能相關設置
   # 輸入時通過快捷鍵 Ctrl+t 可以將高亮顯示的候選置頂，被置頂的候選位置固定，不再參與調頻
