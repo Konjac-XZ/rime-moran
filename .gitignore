@@ -20,3 +20,16 @@ pinyin_simp*
 sync/
 .env
 .pdm-python
+key_bindings.yaml.bak
+default.yaml.bak
+moran.userdb.old/001528.ldb
+moran.userdb.old/CURRENT
+moran.userdb.old/LOCK
+moran.userdb.old/LOG
+moran.userdb.old/LOG.old
+moran.userdb.old/MANIFEST-000001
+moran.userdb.old/lost/MANIFEST-000001
+moran.userdb.old/*
+
+**/*.txt
+convert_uppercase.py
