@@ -20,3 +20,7 @@
 復旦大學	fdu	0
 VxWorks	vx	1
 BSP	bsp	1
+Avatar	avatar	1
+QEMU	qemu	1
+MMIO	mmio	1
+ZeroMQ	zero	1
