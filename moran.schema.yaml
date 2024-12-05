@@ -22,31 +22,31 @@ schema:
 
 switches:
   - name: ascii_mode
-    states: [ 中文, 西文 ]
+    states: [中文, 西文]
   - name: full_shape
-    states: [ 半角, 全角 ]
-  - name: simplification
-    states: [ 漢字, 汉字 ]
+    states: [半角, 全角]
+  - name: traditionalization
+    states: [汉字, 漢字]
   - name: ascii_punct
-    states: [ 。，, ．， ]
+    states: [。，, ．，]
   - name: extended_charset
-    states: [ 通用, 增廣 ]
+    states: [通用, 增廣]
   - name: inflexible
-    states: [ 動詞, 固詞 ] # 「固詞」表示「固頂詞」
+    states: [動詞, 固詞] # 「固詞」表示「固頂詞」
     # 默認情況下，輸入 4 碼時，會禁止碼表輸出（「動詞」模式）。
     # 這是因爲碼表最大碼長爲 4，可能會產生較低頻的多字詞，覆蓋過用戶自造的常用詞語。
     # 當固詞模式啓動後，輸入 4 碼時會優先輸出碼表中的二字詞，這些輸出帶有「⚡️」標記。
   - name: emoji
-    states: [ 🈚, 🈶 ]
+    states: [🈚, 🈶]
   - name: chaifen
-    states: [ 不拆, 扌斥 ]
+    states: [不拆, 扌斥]
   - name: pinyinhint
-    states: [ 🔇, 🔊 ]
+    states: [🔇, 🔊]
   - name: unicode_comment
-    states: [ U關, U開 ]
-  - options: [ std_opencc,  std_tw, std_hk, std_dzing ]
+    states: [U關, U開]
+  - options: [std_opencc, std_tw, std_hk, std_dzing]
     reset: 0
-    states: [ 通, 臺, 港, 寍 ]
+    states: [通, 臺, 港, 寍]
 
 engine:
   processors:
@@ -57,7 +57,7 @@ engine:
     - recognizer
     - speller
     - punctuator
-    - lua_processor@*moran_launcher     # 輸入 omorj 或 ogrwh 後回車打開魔然官網
+    - lua_processor@*moran_launcher # 輸入 omorj 或 ogrwh 後回車打開魔然官網
     - selector
     - navigator
     - express_editor
@@ -78,14 +78,14 @@ engine:
     - reverse_lookup_translator@reverse_cangjie5
     - reverse_lookup_translator@reverse_zrlf
     - reverse_lookup_translator@reverse_bopomofo
-    - table_translator@custom_phrase       # 自定義短語
-    - table_translator@english             # 英語混輸
+    - table_translator@custom_phrase # 自定義短語
+    - table_translator@english # 英語混輸
     #- table_translator@japanese_o          # 日語引導輸入
     #- table_translator@japanese            # 日語混輸
     - lua_translator@*moran_express_translator@with_reorder # 翻譯器
-    - lua_translator@*moran_shijian        # 日期orq 節氣ojq 星期oxq 時間osj
-    - lua_translator@*moran_number         # 數字轉大寫, 大寫S引導, 如 S123
-    - lua_translator@*moran_unicode        # Unicode輸入, 大寫U引導, 如 U9b54
+    - lua_translator@*moran_shijian # 日期orq 節氣ojq 星期oxq 時間osj
+    - lua_translator@*moran_number # 數字轉大寫, 大寫S引導, 如 S123
+    - lua_translator@*moran_unicode # Unicode輸入, 大寫U引導, 如 U9b54
     - lua_translator@*moran_pin*panacea_translator
     - history_translator@quick_repeat
   filters:
@@ -102,8 +102,8 @@ engine:
     - simplifier@std_tw
     - simplifier@std_dzing
     - simplifier@simplifier
-    - lua_filter@*moran_charset_comment_filter  # Unicode 區位提示
-    - lua_filter@*moran_unicode_display_filter  # Unicode 編碼提示
+    - lua_filter@*moran_charset_comment_filter # Unicode 區位提示
+    - lua_filter@*moran_unicode_display_filter # Unicode 編碼提示
     - uniquifier
 
 speller:
@@ -119,7 +119,7 @@ speller:
       - moran:/algebra/user_sentence_bottom?
       - moran:/algebra/user_force_bottom?
 
-translator:    # 整句輸入模式設置，在 top_translator 中被調用
+translator: # 整句輸入模式設置，在 top_translator 中被調用
   dictionary: moran.extended
   prism: moran
   initial_quality: 5
@@ -129,8 +129,8 @@ translator:    # 整句輸入模式設置，在 top_translator 中被調用
   preedit_format:
     - xform/([a-z][a-z][a-z][a-z])o/$1°/
 
-fixed:         # 固頂輸入模式設置，在 top_translator 中被調用
-  dictionary: moran_fixed
+fixed: # 固頂輸入模式設置，在 top_translator 中被調用
+  dictionary: moran_fixed_simp
   initial_quality: 100
   enable_completion: false
   enable_sentence: false
@@ -178,14 +178,14 @@ japanese_o:
   tips: "〔日本語〕"
   enable_completion: true
 
-quick_repeat:  # 快速重複上屏
+quick_repeat: # 快速重複上屏
   input: ";d"
   size: 1
   initial_quality: 0
 
 simplifier:
-  option_name: simplification
-  opencc_config: moran_t2s.json
+  option_name: traditionalization
+  opencc_config: s2t.json
   tags: [abc]
 
 chaifen:
@@ -320,7 +320,7 @@ recognizer:
   import_preset: default
   patterns:
     unicode: "^U[a-fA-F0-9]+"
-    punct: '^/([0-9]0?|[A-Za-z]+)$'
+    punct: "^/([0-9]0?|[A-Za-z]+)$"
     # 反查
     reverse_universal: "(^(`[a-z`]+))|(^([a-z]{2}(`[a-z`]?|[a-z`]`)))"
     # reverse_tick: "(^`$)|(^`[a-zA-Z]+$)"
@@ -331,14 +331,14 @@ recognizer:
     reverse_bopomofo: '^ovy[A-Za-z0-9,.;/\-]*$'
     # CAVEAT: 排除 ^; 避免 ;d 無法自動上屏
     # CAVEAT: ^o 只保留 ^ou 和 ^o$，避免反查被干擾
-    has_emoji: '(^[a-np-z][a-z/]*$)|(^[a-z]$)|(^ou[a-z/]*$)'
+    has_emoji: "(^[a-np-z][a-z/]*$)|(^[a-z]$)|(^ou[a-z/]*$)"
     # ojp 引導日語輸入
-    japanese_o: '(^ojp[a-z]*$)'
+    japanese_o: "(^ojp[a-z]*$)"
 
 recognizer_secondary:
   patterns:
     # {4} 表示輸入長度達到 4 後開始輸出英語
-    english: '^[A-Za-z]{4}[A-Za-z]*'
+    english: "^[A-Za-z]{4}[A-Za-z]*"
 
 moran:
   # 簡快碼提示符
@@ -362,9 +362,9 @@ moran:
   # 當一個字具有簡碼時，打其全碼（不論是 yyxx 還是 yyxxo）都會導致該
   # 字讓出首位，而被推遲到後位。
   ijrq:
-    enable: true       # 是否啓用單字的出簡讓全？
+    enable: true # 是否啓用單字的出簡讓全？
     #defer: 5          # 延遲多少位？若不設置该项，或值小於等於 0，則推遲到第二頁的首選
-    show_hint: true    # 若讓全，則提示簡碼打法
+    show_hint: true # 若讓全，則提示簡碼打法
 
     # 詞語級「讓全」，對二、三、四字詞有效
     # 例：假設 lmjx 的輸出是 1.連接 2.鏈接
@@ -382,8 +382,8 @@ moran:
   enable_quick_code_hint: false
 
   # 輸入四碼時，如果簡碼碼表中含有對應條目，則放置在第二選項。
-  show_chars_anyway: false   # 是否輸出簡碼碼表單字，例：輸入 jwrg 時，次選爲「佳」
-  show_words_anyway: false   # 是否輸出簡碼碼表詞語，例：輸入 lmsd 時，次選爲「兩面三刀」
+  show_chars_anyway: false # 是否輸出簡碼碼表單字，例：輸入 jwrg 時，次選爲「佳」
+  show_words_anyway: false # 是否輸出簡碼碼表詞語，例：輸入 lmsd 時，次選爲「兩面三刀」
 
   # 「置頂」功能相關設置
   # 輸入時通過快捷鍵 Ctrl+t 可以將高亮顯示的候選置頂，被置頂的候選位置固定，不再參與調頻

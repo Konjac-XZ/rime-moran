@@ -165,7 +165,7 @@ translator:    # 整句輸入模式設置，在 top_translator 中被調用
     - xform/([a-z][a-z][a-z][a-z])o/$1°/
 
 fixed:         # 固頂輸入模式設置，在 top_translator 中被調用
-  dictionary: moran_fixed
+  dictionary: moran_fixed_simp
   initial_quality: 100
   enable_completion: false
   enable_sentence: false

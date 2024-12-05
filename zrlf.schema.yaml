@@ -19,11 +19,11 @@ schema:
 switches:
   - name: ascii_mode
     reset: 0
-    states: [ Chi, Eng ]
+    states: [Chi, Eng]
   - name: full_shape
-    states: [ Half, Full ]
-  - name: simplification
-    states: [ Trad, Simp ]
+    states: [Half, Full]
+  - name: traditionalization
+    states: [Trad, Simp]
 
 engine:
   processors:
