@@ -3,7 +3,6 @@ build/
 trash/
 *.userdb/
 installation.yaml
-user.yaml
 input.txt
 output.txt
 moran_fixed.txt
@@ -13,8 +12,6 @@ njerchet.*
 zrm6.*
 make_dist.sh
 dist/
-default.custom.yaml
-*.custom.*
 pinyin_simp*
 .venv/
 sync/
