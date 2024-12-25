@@ -12502,8 +12502,8 @@
 思 xt
 怞 xy
 怟 xd
-怠 sx
 怠 xt
+怠 sx
 怡 xt
 怢 xu
 怣 xu
@@ -14732,6 +14732,8 @@
 朁 jo
 朁 og
 朁 oj
+朁 wo
+朁 ow
 朂 ol
 會 ro
 朄 uj
@@ -23291,6 +23293,7 @@
 舊 cj
 舋 jq
 舋 qb
+舌 kq
 舌 qk
 舍 ru
 舎 rk
@@ -23313,7 +23316,7 @@
 舛 xf
 舜 vf
 舝 wf
-舝 zs
+舝 aa
 舞 rf
 舞 pa
 舞 xf
@@ -23440,7 +23443,7 @@
 芇 cj
 芈 aa
 芈 af
-芉 cq
+芉 cg
 芊 cq
 芋 cy
 芌 ck
@@ -24189,8 +24192,8 @@
 蔏 cu
 蔐 cd
 蔑 cu
-蔒 cd
 蔒 ch
+蔒 cd
 蔓 cm
 蔔 cf
 蔔 ct
@@ -24250,6 +24253,7 @@
 蔾 cm
 蔿 cw
 蕀 cc
+蕀 cj
 蕁 cx
 蕂 cu
 蕃 cf
@@ -24285,8 +24289,8 @@
 蕝 cj
 蕞 cz
 蕟 cf
-蕠 cr
 蕠 cs
+蕠 cr
 蕠 sr
 蕡 cb
 蕢 cg
@@ -25015,7 +25019,6 @@
 螦 is
 螧 io
 螧 iq
-螧 ir
 螨 il
 螩 it
 螪 iu
@@ -25327,7 +25330,6 @@
 袉 yt
 袊 yl
 袋 yd
-袌 dy
 袌 wy
 袌 yb
 袍 yb
@@ -25365,7 +25367,6 @@
 袩 yv
 袪 yq
 被 yp
-袬 dy
 袬 wy
 袬 yk
 袬 yt
@@ -25376,7 +25377,6 @@
 袰 my
 袰 ym
 袱 yf
-袲 dy
 袲 wy
 袲 yd
 袳 yd
@@ -25438,7 +25438,6 @@
 裣 yq
 裤 yk
 裥 yj
-裦 dy
 裦 wy
 裦 ym
 裧 yy
@@ -25488,10 +25487,8 @@
 褋 ym
 褌 yj
 褍 ye
-褎 dy
 褎 wy
 褎 yh
-褏 dy
 褏 wy
 褏 yy
 褐 yh
@@ -25517,7 +25514,6 @@
 褠 yg
 褡 yd
 褡 yh
-褢 dy
 褢 wy
 褢 yg
 褣 yr
@@ -25560,7 +25556,6 @@
 襀 yz
 襁 yq
 襂 yc
-襃 dy
 襃 wy
 襃 yd
 襄 wy
@@ -26187,7 +26182,6 @@
 譚 yt
 譛 yt
 譜 yp
-譝 dh
 譝 ym
 譞 yh
 譞 yy
@@ -26497,7 +26491,6 @@
 豖 ad
 豗 wu
 豘 ut
-豙 du
 豙 lu
 豙 wu
 豚 ou
@@ -26643,7 +26636,7 @@
 賑 bi
 賒 bu
 賓 bb
-賔 bm
+賔 bb
 賕 bq
 賖 by
 賗 bi
@@ -26677,9 +26670,9 @@
 賫 ub
 賬 bi
 賭 bv
-賮 bd
 賮 bh
 賮 yb
+賮 bd
 賯 bz
 賰 bi
 賱 bj
@@ -37314,6 +37307,8 @@
 𡆝 kl
 𡆟 ki
 𡆠 ky
+𡆡 kd
+𡆢 ka
 𡆣 kr
 𡆤 ke
 𡆥 kb
@@ -96633,7 +96628,7 @@
 𱰿 tk
 𱱁 lt
 𱱁 tl
-𱱄 tk
+𱱄 tc
 𱱆 ct
 𱱆 tt
 𱱈 lx
@@ -97343,6 +97338,8 @@
 𱿼 ir
 𱿾 iq
 𱿾 qi
+𲀁 ij
+𲀁 ig
 𲀂 is
 𲀃 ib
 𲀆 iz

@@ -43,8 +43,16 @@ function Module.init(env)
       end
 
       local cand = segment:get_selected_candidate()
+<<<<<<< HEAD
       if cand.comment and cand.comment ~= "" then
          aux_length = #cand.comment
+=======
+      if env.engine.context:get_option("chaifen") then
+         cand = cand:get_genuine()
+      end
+      if cand and cand.comment and cand.comment ~= "" then
+         aux_length = #moran.rstrip(cand.comment, env.aux_priority_indicator)
+>>>>>>> main
       end
    end
 
