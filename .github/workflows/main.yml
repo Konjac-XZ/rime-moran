@@ -34,6 +34,12 @@ jobs:
             dist/moran.computer.dict.yaml
             dist/moran.hanyu.dict.yaml
             dist/moran.words.dict.yaml
+      - name: Deploy to branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+          publish_branch: simp
       - name: Setup tmate session
         if: ${{ failure() }}
         uses: mxschmitt/action-tmate@v3
@@ -45,7 +51,7 @@ jobs:
           git archive HEAD -o archive.tar
           mkdir -p dist
           tar xf archive.tar -C dist
-          rm -rf dist/tools dist/.git dist/.github dist/make_simp_dist.sh
+          rm -rf dist/tools dist/.git dist/.github dist/make_simp_dist.sh dist/tests
       - uses: actions/upload-artifact@v4
         with:
           name: "Trad-FullPack"
@@ -60,6 +66,12 @@ jobs:
             dist/moran.computer.dict.yaml
             dist/moran.hanyu.dict.yaml
             dist/moran.words.dict.yaml
+      - name: Deploy to branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+          publish_branch: trad
 
 
   # upload-to-hamster:

@@ -3244,6 +3244,7 @@ encoder:
 斌	bn
 不能啊	bna
 宾	bnb
+不能不	bnb
 不年不节	bnbj
 不男不女	bnbn
 彬彬	bnbn
@@ -3804,6 +3805,7 @@ encoder:
 布袋	budl
 布店	budm
 不多	budo
+波士顿	budp
 不断	budr
 不懂	buds
 不识大体	budt
@@ -4520,6 +4522,7 @@ encoder:
 冰封	byfg
 病房	byfh
 不由分说	byfu
+禀赋	byfu
 兵符	byfu
 别有风味	byfw
 并非	byfz
@@ -8451,7 +8454,6 @@ encoder:
 单机	djji
 淡季	djji
 单击	djji
-弹击	djji
 殚精竭虑	djjl
 单间	djjm
 但见	djjm
@@ -8531,6 +8533,7 @@ encoder:
 单曲	djqu
 低级趣味	djqw
 胆怯	djqx
+蛋清	djqy
 丹青	djqy
 欻	djqy
 儋	djr
@@ -9371,6 +9374,7 @@ encoder:
 都能够	dng
 对内搞活	dngh
 电脑红娘	dnhn
+电脑城	dni
 大年初一	dniy
 大难临头各自飞	dnlf
 大难临头	dnlt
@@ -12228,6 +12232,7 @@ encoder:
 蜂拥	fgys
 风月	fgyt
 风雨	fgyu
+丰腴	fgyu
 丰盈	fgyy
 逢	fgz
 奉赠	fgzg
@@ -15755,6 +15760,7 @@ encoder:
 国风	gofg
 国防	gofh
 果腹	gofu
+果脯	gofu
 国歌	goge
 果敢	gogj
 过高	gogk
@@ -15836,7 +15842,6 @@ encoder:
 果皮	gopi
 果盘	gopj
 果品	gopn
-果脯	gopu
 过桥	goqc
 过期	goqi
 过谦	goqm
@@ -15927,6 +15932,7 @@ encoder:
 国葬	gozh
 果子	gozi
 过早	gozk
+聒噪	gozk
 过载	gozl
 裹足	gozu
 国贼	gozz
@@ -17257,6 +17263,7 @@ encoder:
 恭喜恭喜	gxgx
 个性化	gxh
 更新换代	gxhd
+关系户	gxhu
 供销合作社	gxhu
 规行矩步	gxjb
 工薪阶层	gxjc
@@ -22287,7 +22294,7 @@ encoder:
 城根	iggf
 撑杆	iggj
 秤杆	iggj
-撑篙	iggk
+成稿	iggk
 成果	iggo
 城管	iggr
 成功	iggs
@@ -24142,6 +24149,7 @@ encoder:
 初春	iuip
 除虫	iuis
 处处	iuiu
+出处	iuiu
 雏	iuiv
 蜍	iuiy
 触	iuj
@@ -26676,6 +26684,8 @@ encoder:
 建	jmz
 间杂	jmza
 蹇	jmzb
+间奏	jmzb
+健走	jmzb
 简则	jmze
 尖子	jmzi
 剪子	jmzi
@@ -29361,8 +29371,8 @@ encoder:
 鸡鸭鱼肉	jyyr
 经用	jyys
 鲸鱼	jyyu
+境遇	jyyu
 锦衣玉食	jyyu
-净余	jyyu
 见义勇为	jyyw
 记忆犹新	jyyx
 锦衣夜行	jyyx
@@ -31519,6 +31529,7 @@ encoder:
 蝲	laid
 拉扯	laie
 拉长	laih
+腊肠	laih
 蝲	lail
 拉出	laiu
 镴	laj
@@ -33936,7 +33947,7 @@ encoder:
 刘邦	lqbh
 流弊	lqbi
 六百	lqbl
-陆佰	lqbl
+留白	lqbl
 流变	lqbm
 流播	lqbo
 六亲不认	lqbr
@@ -33954,6 +33965,7 @@ encoder:
 流	lqd
 溜达	lqda
 溜掉	lqdc
+留档	lqdh
 留底	lqdi
 流到	lqdk
 留待	lqdl
@@ -35178,7 +35190,6 @@ encoder:
 铃	lyj
 领教	lyjc
 领奖	lyjd
-来样加工	lyjg
 劳逸结合	lyjh
 另计	lyji
 灵机	lyji
@@ -37824,6 +37835,7 @@ encoder:
 母子	muzi
 谋事在人	muzr
 名声在外	muzw
+某种	mv
 命中	mv
 明争暗斗	mvad
 明珠暗投	mvat
@@ -42505,6 +42517,7 @@ encoder:
 配载	pzzl
 赔罪	pzzv
 去	q	quts
+其	q
 亲爱	qa
 亲爱的	qad
 乞哀告怜	qagl
@@ -42541,6 +42554,7 @@ encoder:
 七八十岁	qbus
 缺边少沿	qbuy
 七步之才	qbvc
+岂不闻	qbw
 千遍万遍	qbwb
 千变万化	qbwh
 轻薄无礼	qbwl
@@ -45622,6 +45636,7 @@ encoder:
 揉	rbf
 柔风	rbfg
 入不敷出	rbfi
+肉脯	rbfu
 人不犯我	rbfw
 鞣	rbg
 肉鸽	rbge
@@ -45666,7 +45681,6 @@ encoder:
 肉皮	rbpi
 肉排	rbpl
 肉片	rbpm
-肉脯	rbpu
 肉铺	rbpu
 肉鳍	rbqi
 肉禽	rbqn
@@ -46485,7 +46499,7 @@ encoder:
 热情好客	rqhk
 日趋成熟	rqiu
 日趋进步	rqjb
-肉起来	rql
+人齐了	rql
 人情练达	rqld
 燃气轮机	rqlj
 人去楼空	rqlk
@@ -49240,6 +49254,7 @@ encoder:
 太不像话	tbxh
 偷袭	tbxi
 同病相怜	tbxl
+停不下来	tbxl
 头衔	tbxm
 特别行政区	tbxq
 头癣	tbxr
@@ -49403,6 +49418,7 @@ encoder:
 条形	tcxy
 调	tcy
 跳崖	tcya
+调优	tcyb
 调养	tcyh
 挑眼	tcyj
 迢遥	tcyk
@@ -50319,6 +50335,7 @@ encoder:
 掏出	tkiu
 讨教	tkjc
 套间	tkjm
+套件	tkjm
 淘金	tkjn
 陶钧	tkjp
 讨价	tkjw
@@ -54352,7 +54369,7 @@ encoder:
 释	uipf
 氏	uipg
 实盘	uipj
-势派	uipl
+实拍	uipl
 诗篇	uipm
 视频	uipn
 食品	uipn
@@ -58301,6 +58318,7 @@ encoder:
 致用	viys
 制约	viyt
 至于	viyu
+治愈	viyu
 酯	viyv
 直营	viyy
 支应	viyy
@@ -58840,7 +58858,8 @@ encoder:
 执迷不悟	vmbw
 这么菜	vmc
 这么惨	vmc
-殖民地	vmd
+这么的	vmd
+这么点	vmd
 这么点儿	vmde
 争名夺利	vmdl
 这么多年	vmdn
@@ -63618,6 +63637,7 @@ encoder:
 小而言之	xeyv
 玄而又玄	xeyx
 想法	xf
+相反	xf
 媳妇熬成婆	xfap
 相逢不用忙归去	xfbq
 兴奋不已	xfby
@@ -64944,6 +64964,7 @@ encoder:
 训导	xpdk
 血盆大口	xpdk
 汛	xpdu
+训读	xpdu
 浚	xpdw
 浔	xpdx
 汛	xpdx
@@ -65753,6 +65774,7 @@ encoder:
 小兔崽子	xtzz
 需	xu
 刑事案件	xuaj
+现实	xub
 心神不安	xuba
 序跋	xuba
 心神不定	xubd
@@ -66684,6 +66706,7 @@ encoder:
 行贩	xyfj
 幸福	xyfu
 咸鱼翻身	xyfu
+杏脯	xyfu
 逍遥法外	xyfw
 下一个	xyg
 星光	xygd
@@ -66798,7 +66821,6 @@ encoder:
 行骗	xypm
 行聘	xypn
 汹涌澎湃	xypp
-杏脯	xypu
 稀有品种	xypv
 猩	xyq
 悬崖峭壁	xyqb
@@ -73717,6 +73739,7 @@ encoder:
 怎么啦	zmlak
 做买卖	zmm
 怎么能	zmn
+怎么你了	zmnl
 自贸区	zmq
 自命清高	zmqg
 钻木取火	zmqh
@@ -75872,6 +75895,7 @@ encoder:
 都能够	dngb
 多年后	dnhb
 多瑙河	dnhe
+电脑城	dnig
 低年级	dnji
 多年来	dnll
 单宁酸	dnsr
@@ -76875,7 +76899,6 @@ encoder:
 关系到	gxdk
 高消费	gxfz
 共析钢	gxgh
-关系户	gxhu
 个性化	gxhw
 肝吸虫	gxis
 干血浆	gxjd
@@ -79523,6 +79546,7 @@ encoder:
 且不说	qbuo
 却不知	qbvi
 情报站	qbvj
+岂不闻	qbwf
 千百万	qbwj
 情报学	qbxt
 前半夜	qbye

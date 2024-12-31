@@ -105,6 +105,14 @@ def main(args):
         for (word, stem) in deferred:
             table.add(word, stem)
 
+    # additional symbols
+    with open('../moran_fixed.symbols.dict.yaml', 'r') as f:
+        for l in f:
+            matches = re.findall(r'(.*)\t(o[a-z]+)', l)
+            if not matches: continue
+            char, code = matches[0]
+            table.add(char, code)
+
     # additional chars
     with open('../moran.chars.dict.yaml', 'r') as f:
         for l in f:
