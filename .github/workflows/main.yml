@@ -6,7 +6,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Set up mira
         run: |
-          sudo apt-get -y install librime1t64 librime-plugin-lua libyaml-cpp0.8
           wget https://github.com/rimeinn/mira/releases/download/latest/mira
           chmod +x mira
       - name: Test
@@ -73,6 +72,69 @@ jobs:
           publish_dir: dist
           publish_branch: trad
 
+  demo-simp:
+    runs-on: ubuntu-24.04
+    needs: [simplified-moran]
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: Simp-FullPack
+      - name: Build
+        run: |
+          sudo apt install -y librime-data librime-bin
+
+          rm -f *.gram
+          cat >moran.extended.dict.yaml <<EOF
+          ---
+          name: moran.extended
+          version: "mini"
+          sort: by_weight
+          use_preset_vocabulary: false
+          import_tables: [moran.chars, moran.base, moran.words]
+          ...
+          EOF
+
+          rime_deployer --build . /usr/share/rime-data ./build
+          rm -rf ./*.yaml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Simp-Demo
+          path: |
+            build/
+            lua/
+            opencc/
+
+  demo-trad:
+    runs-on: ubuntu-24.04
+    needs: [traditional-moran]
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: Trad-FullPack
+      - name: Build
+        run: |
+          sudo apt install -y librime-data librime-bin
+
+          rm -f *.gram
+          cat >moran.extended.dict.yaml <<EOF
+          ---
+          name: moran.extended
+          version: "mini"
+          sort: by_weight
+          use_preset_vocabulary: false
+          import_tables: [moran.chars, moran.base, moran.words]
+          ...
+          EOF
+
+          rime_deployer --build . /usr/share/rime-data ./build
+          rm -rf ./*.yaml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Trad-Demo
+          path: |
+            build/
+            lua/
+            opencc/
 
   # upload-to-hamster:
   #   needs: [simplified-moran, traditional-moran]
