@@ -1,6 +1,7 @@
 var:
-  last_build_time: 1733400733
+  last_build_time: 1735638980
   option:
+    emoji: true
     simplification: false
     traditionalization: false
   previously_selected_schema: moran
