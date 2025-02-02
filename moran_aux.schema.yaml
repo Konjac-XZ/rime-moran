@@ -18,8 +18,8 @@ switches:
     states: [ 中文, 西文 ]
   - name: full_shape
     states: [ 半角, 全角 ]
-  - name: traditionalization
-    states: [ 汉字, 漢字 ]
+  - name: simplification
+    states: [ 漢字, 汉字 ]
   - name: ascii_punct
     states: [ 。，, ．， ]
   - name: extended_charset
@@ -108,7 +108,7 @@ custom_phrase: # 自定義短語
 
 # 掛接用法，需解除 translators 中對應的註釋
 fixed:
-  dictionary: moran_fixed_simp
+  dictionary: moran_fixed
   initial_quality: 10
   enable_completion: false
   enable_sentence: false
@@ -133,8 +133,8 @@ japanese:
   initial_quality: 0
 
 simplifier:
-  option_name: traditionalization
-  opencc_config: s2t.json
+  option_name: simplification
+  opencc_config: moran_t2s.json
 
 emoji:
   opencc_config: moran_emoji.json

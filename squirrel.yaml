@@ -491,6 +491,8 @@ preset_color_schemes:
     hilited_candidate_back_color: 0xCE7539   # 候选文字背景色
     comment_text_color: 0x6D6D6D             # 拼音等提示文字颜色
     hilited_comment_text_color: 0xEBC6B0     # 注解文字高亮
+    font_face: "Source Han Sans SC"
+    label_font_face: "Source Han Sans SC"
     hilited_candidate_label_color: 0xfafafa  # 第一候选项编号颜色
 
   milan:
@@ -602,7 +604,7 @@ preset_color_schemes:
     border_color: 0xffffff                    # 颜色 - 边框
     back_color: 0xF4F4F6                      # 颜色 - 面板背景
     label_color: 0xaaaaaa                     # 颜色 - 候选序号
-    # font_face: PingFang SC Semibold                    # 字体 - 候选文字
+    # font_face: Source Han Sans SC Semibold                    # 字体 - 候选文字
     font_point: 18                            # 字体大小 - 候选
     # label_font_face: Skia                     # 字体 - 候选数字
     # label_font_point: 18                      # 字体大小 - 候选序号
@@ -623,7 +625,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0xF19C38      # 颜色 - 首选候选词 - 提示编码
     candidate_text_color: 0x222222            # 颜色 - 其它候选词 - 文字
     comment_text_color: 0x5AC461              # 颜色 - 其它候选词 - 提示编码
-    comment_font_face: PingFang SC            # 字体 - 候选词编码的提示
+    comment_font_face: Source Han Sans SC            # 字体 - 候选词编码的提示
     comment_font_point: 16                    # 字体大小 - 候选词编码的提示
 
     inline_preedit: true                      # 输入的编码是否直接写入到输入框中，如果为 false，未上屏的编码就会写在候选框中
