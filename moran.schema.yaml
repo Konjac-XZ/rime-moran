@@ -314,7 +314,7 @@ key_binder:
       - moran:/key_bindings/moran_keypad
       # 大寫字母追加輔助碼到上一音節
       # 該功能可使用 Shift-tab 替代
-      - moran:/key_bindings/moran_capital_for_last_syllable
+      # - moran:/key_bindings/moran_capital_for_last_syllable
 
 recognizer:
   import_preset: default
