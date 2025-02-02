@@ -13,8 +13,8 @@ switches:
     states: [ 中文, 西文 ]
   - name: full_shape
     states: [ 半角, 全角 ]
-  - name: simplification
-    states: [ 漢字, 汉字 ]
+  - name: traditionalization
+    states: [ 汉字, 漢字 ]
   - name: ascii_punct
     states: [ 。，, ．， ]
   - name: emoji
@@ -80,7 +80,7 @@ speller:
       - moran:/algebra/user_force_bottom?
 
 translator:
-  dictionary: moran_fixed
+  dictionary: moran_fixed_simp
   db_class: tabledb
   enable_charset_filter: false
   enable_sentence: false
@@ -89,7 +89,7 @@ translator:
   initial_quality: 100000
 
 fixed:
-  dictionary: moran_fixed
+  dictionary: moran_fixed_simp
   db_class: tabledb
   enable_charset_filter: false
   enable_sentence: false
@@ -110,7 +110,7 @@ custom_phrase: # 自定義短語
 zkci:           # 造詞
   tag: zkci
   db_class: tabledb
-  dictionary: moran_fixed
+  dictionary: moran_fixed_simp
   enable_user_dict: false
   enable_charset_filter: false
   enable_completion: false
@@ -132,8 +132,8 @@ quick_repeat:  # 快速重複上屏
   initial_quality: 0
 
 simplifier:
-  option_name: simplification
-  opencc_config: moran_t2s.json
+  option_name: traditionalization
+  opencc_config: s2t.json
 
 std_hk:
   opencc_config: t2hk.json

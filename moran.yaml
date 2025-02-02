@@ -58,7 +58,7 @@ key_bindings:
   # 一些功能的開關鍵
   moran_switches:
     __append:
-      - { when: has_menu, accept: "Control+s", toggle: simplification }
+      - { when: has_menu, accept: "Control+s", toggle: traditionalization }
       - { when: has_menu, accept: "Control+u", toggle: unicode_comment }
       - { when: has_menu, accept: "Control+q", toggle: emoji }
       - { when: composing, accept: "Control+x", toggle: extended_charset }
@@ -119,13 +119,13 @@ octagram:
   enable_for_sentence:
     __patch:
       grammar:
-        language: zh-hant-t-essay-bgw
+        language: zh-hans-t-essay-bgw
         collocation_max_length: 4
         collocation_min_length: 3
   enable_for_fixed:
     __patch:
       grammar:
-        language: zh-hant-t-essay-bgc
+        language: zh-hans-t-essay-bgc
         collocation_max_length: 4
         collocation_min_length: 2
       fixed/+:
