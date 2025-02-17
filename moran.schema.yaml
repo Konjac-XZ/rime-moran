@@ -107,7 +107,7 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: abcdefghijklmnopqrstuvwxyz/;
+  alphabet: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/;
   delimiter: " '"
   auto_select: true
   auto_select_pattern: ^;(\w+|;)

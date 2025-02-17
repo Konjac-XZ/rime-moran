@@ -1,2 +1,4 @@
 var:
-  last_build_time: 1738466986
+  last_build_time: 1739782352
+  option:
+    emoji: true
