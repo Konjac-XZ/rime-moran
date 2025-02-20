@@ -319,10 +319,10 @@ recognizer:
   import_preset: default
   patterns:
     unicode: "^U[a-fA-F0-9]+"
-    punct: "^/([0-9]0?|[A-Za-z]+)$"
+    punct: '^/([0-9]0?|[A-Za-z]+)$'
     # 反查
     reverse_universal: "(^(`[a-z`]+))|(^([a-z]{2}(`[a-z`]?|[a-z`]`)))"
-    # reverse_tick: "(^`$)|(^`[a-zA-Z]+$)"
+    reverse_tick: "(^`$)|(^`[a-zA-Z]+$)"
     reverse_tiger: "^ohm[a-z]+$"
     reverse_stroke: "^obh[A-Za-z]*$"
     reverse_cangjie5: "^ocj[A-Za-z]*$"
@@ -330,14 +330,14 @@ recognizer:
     reverse_bopomofo: '^ovy[A-Za-z0-9,.;/\-]*$'
     # CAVEAT: 排除 ^; 避免 ;d 無法自動上屏
     # CAVEAT: ^o 只保留 ^ou 和 ^o$，避免反查被干擾
-    has_emoji: "(^[a-np-z][a-z/]*$)|(^[a-z]$)|(^ou[a-z/]*$)"
+    has_emoji: '(^[a-np-z][a-z/]*$)|(^[a-z]$)|(^ou[a-z/]*$)'
     # ojp 引導日語輸入
-    japanese_o: "(^ojp[a-z]*$)"
+    japanese_o: '(^ojp[a-z]*$)'
 
 recognizer_secondary:
   patterns:
     # {4} 表示輸入長度達到 4 後開始輸出英語
-    english: "^[A-Za-z]{4}[A-Za-z]*"
+    english: '^[A-Za-z]{4}[A-Za-z]*'
 
 moran:
   # 簡快碼提示符
