@@ -146,7 +146,7 @@ custom_phrase: # 自定義短語
   initial_quality: 1000
 
 english:
-  tag: english  # librime<=0.11 請在 custom 中置空
+  # tag: english  # librime<=0.11 請在 custom 中置空
   dictionary: moran_english
   prism: moran_english
   enable_completion: true
@@ -321,8 +321,8 @@ recognizer:
     unicode: "^U[a-fA-F0-9]+"
     punct: '^/([0-9]0?|[A-Za-z]+)$'
     # 反查
-    reverse_universal: "(^(`[a-z`]+))|(^([a-z]{2}(`[a-z`]?|[a-z`]`)))"
-    reverse_tick: "(^`$)|(^`[a-zA-Z]+$)"
+    # reverse_universal: "(^(`[a-z`]+))|(^([a-z]{2}(`[a-z`]?|[a-z`]`)))"
+    # reverse_tick: "(^`$)|(^`[a-zA-Z]+$)"
     reverse_tiger: "^ohm[a-z]+$"
     reverse_stroke: "^obh[A-Za-z]*$"
     reverse_cangjie5: "^ocj[A-Za-z]*$"
