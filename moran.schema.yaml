@@ -52,7 +52,7 @@ engine:
   processors:
     - key_binder
     - lua_processor@*moran_pin*pin_processor
-    - lua_processor@*moran_semicolon_processor
+    - lua_processor@*moran_processor
     - ascii_composer
     - recognizer
     - speller
@@ -194,6 +194,7 @@ chaifen:
   show_in_comment: true
   comment_form:
     - "xform/-/ /"
+    - "xform/〕〔/｜/"
 
 pinyinhint:
   option_name: pinyinhint
@@ -410,3 +411,4 @@ __include: moran:/octagram/enable_for_sentence
 # 若要禁用，可直接刪掉上面的 __include，或在 custom 文件中寫入：
 # patch:
 #   __include: moran:/octagram/disable
+ 
