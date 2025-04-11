@@ -28,3 +28,4 @@ I/O	io	1
 我们正在 GDB 当中	ingdb	1
 EMAC	emac	1
 DMA	dma	1
+Shandong University	sdu	1

@@ -314,7 +314,7 @@ key_binder:
       - moran:/key_bindings/moran_toggle_inflexible
       # 大寫字母追加輔助碼到上一音節
       # 該功能可使用 Shift-tab 替代
-      # - moran:/key_bindings/moran_capital_for_last_syllable
+      - moran:/key_bindings/moran_capital_for_last_syllable
 
 recognizer:
   import_preset: default
@@ -367,7 +367,7 @@ moran:
   # 當一個字具有簡碼時，打其全碼（不論是 yyxx 還是 yyxxo）都會導致該
   # 字讓出首位，而被推遲到後位。
   ijrq:
-    enable: true # 是否啓用單字的出簡讓全？
+    enable: false # 是否啓用單字的出簡讓全？
     #defer: 5          # 延遲多少位？若不設置该项，或值小於等於 0，則推遲到第二頁的首選
     show_hint: true # 若讓全，則提示簡碼打法
 
