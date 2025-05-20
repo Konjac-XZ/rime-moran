@@ -44237,7 +44237,7 @@
 太阳穴	tai yang xue	136
 太阳系	tai yang xi	245
 太阳神	tai yang shen	111
-台湾省	tai wan sheng	154
+
 台湾人	tai wan ren	706
 谈不上	tan bu shang	833
 谈恋爱	tan lian ai	1022
