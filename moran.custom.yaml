@@ -1,4 +1,5 @@
 patch:
+  punctuator/digit_separator_action: commit
   # "style/layout/hilite_padding_x": 5
   "style/layout/hilite_spacing": 10
   "style/hover_type": none
