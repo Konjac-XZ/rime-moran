@@ -7965,7 +7965,7 @@ columns:
 边缘概率分布	1
 马尔可夫毯	1
 马尔可夫链	1
-马尔可夫链蒙特卡罗	1
+马尔可夫链蒙特卡洛	1
 马尔可夫决策过程	1
 马尔可夫网络	1
 马尔可夫过程	1
@@ -8030,8 +8030,8 @@ columns:
 模型无关的强化学习	1
 矩匹配	1
 动量法	1
-蒙特卡罗估计	1
-蒙特卡罗积分	1
+蒙特卡洛估计	1
+蒙特卡洛积分	1
 最一般合一置换	1
 多臂赌博机问题	1
 多分类器系统	1
@@ -9063,6 +9063,55 @@ columns:
 出餐	100
 取餐	100
 双持	100
+消灾解难	100
+气笑	1
+气笑了	10
+吟诗作赋	1
+硌硬	100
+洛朗级数	100
+杧果	10
+喜加一	100
+函子	100
+老灯	10
+老登	11
+萌妹子	1000
+直谓	10
+非直谓	10
+司美格鲁肽	10
+千焦	500
+河鲀	100
+刺鲀	100
+磨磨唧唧	100
+智谱	200
+智谱清言	10
+清言	10
+进厂之道	1
+救赎之道	1
+就在其中	1
+雷雳	100
+雷雳口	100
+协变	10
+逆变	10
+共变	10
+反变	10
+喌音	10
+疯批	10
+低清	50
+地偶	10
+地下偶像	10
+夺旗赛	100
+夺旗	345
+三趾鹬	10
+滨鹬	10
+牛鹬	10
+牛眼鹬	10
+红背鹬	10
+红尾	1
+水鸲	10
+芳纶	100
+撸铁	100
+防呆	100
+防呆设计	100
 
 # Mini Lyre Dict
 # https://github.com/rimeinn/Lyre/commit/c020d23d334aec77a59b1d5a5b3bcc8c07c86bd0
@@ -10154,20 +10203,27 @@ MIDI键盘	1	midi jm;jj pj;mb
 总谱
 
 # 中西混合词
+哆啦A梦	100	do;kd la;kl A mg;cx
 哆啦A梦	100	do;kd la;kl aa mg;cx
 哆啦A梦	100	do;kd la;kl ei mg;cx
-卡拉OK	100	ka;bx la;fl ok
+U盘	100	U pj;mb
 U盘	100	yb pj;mb
+T恤	100	T xu;xx
 T恤	100	ti xu;xx
 up主	100	up vu;dw
+QQ群	100	QQ qp;yj
 QQ群	100	qq qp;yj
 高ping	100	gk;wk ping
 高ping	100	gk;dk ping
 高ping	100	gk;wk py
 高ping	100	gk;dk py
 打call	10	da;fd kk
+K歌	10	K ge;qg
 K歌	10	kz ge;qg
+卡拉OK	10	ka;ux la;fl OK
+卡拉OK	100	ka;bx la;fl ok
 卡拉OK	10	ka;ux la;fl ou kz
+OK	10	OK
 OK	10	ou kz
 
 # 整句可用的无理码
@@ -10175,3 +10231,34 @@ OK	10	ou kz
 几何	1	jo;yd he;rk
 几十	1	jo;yd ui;aa
 十几	1	ui;aa jo;yd
+未	1	we;ex
+并未	3193	by;qy we;ex
+从未	3193	cs;xv we;ex
+还未	2327	hl;zh we;ex
+均未	858	jp;ty we;ex
+仍未	1359	rg;rn we;ex
+虽未	737	sv;vs we;ex
+尚未	4460	uh;xk we;ex
+未按	788	we;ex an;fa
+未必	3584	we;ex bi;dd
+未便	407	we;ex bm;rg
+未曾	1409	we;ex cg;ob
+未定	960	we;ex dy;bp
+未付	508	we;ex fu;rc
+未婚	1452	we;ex hp;nh
+未尝	876	we;ex ih;xv
+未见	1372	we;ex jm;oe
+未接	610	we;ex jx;fq
+未经	3160	we;ex jy;sg
+未可	544	we;ex ke;dk
+未开	1	we;ex kl;mk
+未了	674	we;ex lc;aa
+未来	16677	we;ex ll;ad
+未满	877	we;ex mj;dr
+未免	1227	we;ex mm;de
+未能	3272	we;ex ng;sb
+未遂	892	we;ex sv;zu
+未知	2309	we;ex vi;uk
+未向	1	we;ex xd;pk
+未详	479	we;ex xd;yy
+暂未	969	zj;ov we;ex
