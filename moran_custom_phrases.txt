@@ -29,3 +29,10 @@ I/O	io	1
 EMAC	emac	1
 DMA	dma	1
 Shandong University	sdu	1
+Docstring	docstring	1
+Ghdira	ghidra	1
+IDA Pro	ida	1
+P-Code	pcode	1
+VarNode	varnode	1
+setter	setter	1
+getter	getter	1

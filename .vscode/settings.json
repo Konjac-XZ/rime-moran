@@ -1,0 +1,6 @@
+{
+	"editor.insertSpaces": false,
+	"editor.acceptSuggestionOnEnter": "off",
+	"editor.inlineSuggest.suppressSuggestions": true,
+	"editor.wordBasedSuggestions": "off"
+}

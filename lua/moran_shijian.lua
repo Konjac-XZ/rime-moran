@@ -1954,9 +1954,11 @@ local function translator(input, seg)
     -- ISO 8601 / RFC 3339 的时间格式 （固定东八区）
   elseif (input == "ors") then
     local current_time = os.time()
+    yield(Candidate(input, seg.start, seg._end, os.date('%Y%m%d-%H%M%S', current_time), "年月日-时分秒"))
     yield(Candidate(input, seg.start, seg._end, os.date('%Y-%m-%d %H:%M:%S', current_time), "年-月-日 时:分:秒"))
     yield(Candidate(input, seg.start, seg._end, os.date('%Y-%m-%dT%H:%M:%S+08:00', current_time), "年-月-日T时:分:秒+时区"))
     yield(Candidate(input, seg.start, seg._end, os.date('%Y%m%d%H%M%S', current_time), "年月日时分秒"))
+    yield(Candidate(input, seg.start, seg._end, os.date('%Y-%m-%d-%H%M%S', current_time), "年-月-日-时分秒"))
     -- Unix Epoch Clock / Timestamp 时间格式
   elseif (input == "oepoch") then
     local current_time = os.time()
