@@ -63,6 +63,7 @@ engine:
   segmentors:
     - ascii_segmentor
     - matcher
+    - matcher@recognizer_emoji
     - matcher@recognizer_secondary
     - affix_segmentor@japanese_o
     - abc_segmentor
@@ -126,6 +127,8 @@ translator: # 整句輸入模式設置，在 top_translator 中被調用
   contextual_suggestions: true
   preedit_format:
     - xform/([a-z][a-z][a-z][a-z])o/$1°/
+  core_word_length: 4
+  max_word_length: 10
 
 fixed: # 固頂輸入模式設置，在 top_translator 中被調用
   dictionary: moran_fixed_simp
@@ -151,7 +154,7 @@ english:
   enable_completion: true
   enable_sentence: false
   enable_user_dict: true
-  initial_quality: 1
+  initial_quality: 0
   enable_encoder: false
   encode_commit_history: false
   comment_format:
@@ -285,7 +288,7 @@ reverse_bopomofo:
     - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
 
 reverse_tick:
-  __include: reverse_tiger
+  __include: reverse_zrlf
   tag: reverse_tick
   prefix: "`"
 
@@ -332,11 +335,14 @@ recognizer:
     reverse_cangjie5: "^ocj[A-Za-z]*$"
     reverse_zrlf: "^olf[A-Za-z]*$"
     reverse_bopomofo: '^ovy[A-Za-z0-9,.;/\-]*$'
+    # ojp 引導日語輸入
+    japanese_o: '(^ojp[a-z]*$)'
+
+recognizer_emoji:
+  patterns:
     # CAVEAT: 排除 ^; 避免 ;d 無法自動上屏
     # CAVEAT: ^o 只保留 ^ou 和 ^o$，避免反查被干擾
     has_emoji: '(^[a-np-z][a-z/]*$)|(^[a-z]$)|(^ou[a-z/]*$)'
-    # ojp 引導日語輸入
-    japanese_o: '(^ojp[a-z]*$)'
 
 recognizer_secondary:
   patterns:
@@ -383,6 +389,11 @@ moran:
     # 想要「鏈接」時，增加 f ，但是由於這兩個候選仍然共享 lmjxf 編碼，因此順序不變。
     # 若開啓詞語級讓全，則 lmjxf 的首選會被調整爲「鏈接」
     enable_word: false
+    # 僅在設定 *毫秒* 之後，才有詞語級讓全效果
+    # 該值可以設定爲「檢視候選發現錯誤 -> 然後補充輔助碼」的時長
+    #     （根據個人情況設定，一般爲 200 上下）
+    # （僅 librime >= 1.14 可用）
+    enable_word_delay: 0
 
   # 單字或詞輔的輔助碼提示
   # 
