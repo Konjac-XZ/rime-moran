@@ -4,27 +4,27 @@ patch:
   "style/layout/hilite_spacing": 10
   "style/hover_type": none
   # "style/layout/hilite_padding": 5
-  "style/layout/min_height": 440
+  "style/layout/min_height": 0
   "style/candidate_abbreviate_length": 0
   "schema/half_icon": "icons/half.ico"
   "style/comment_font_point": 12
   "style/layout/corner_radius": 8
   "style/layout/shadow_radius": 8
   "style/label_format": "%s  "
-  "show_notifications_time": 1400
+  "show_notifications_time": 0
   "style/mark_text": ""
   "style/display_tray_icon": false
   "style/layout/border": 1
   "style/vertical_text_with_wrap": false
-  "style/inline_preedit": false
+  "style/inline_preedit": true
   "style/label_font_point": 14
   "style/label_color": 0x2F2F2F
   "style/comment_font_face": "Source Han Sans SC:::light"
   "style/font_face": "Source Han Sans SC:::light"
   "global_ascii": false
   # "style/color_scheme": "google"
-  "style/layout/max_height": 2800F
-  "show_notifications": true
+  "style/layout/max_height": 4000
+  "show_notifications": false
   "style/ascii_tip_follow_cursor": true
   "style/layout/shadow_offset_x": "-8"
   "style/enhanced_position": true
