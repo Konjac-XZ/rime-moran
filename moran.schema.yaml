@@ -311,6 +311,7 @@ key_binder:
     __append:
       # 在這裏添加只在本方案中生效的按鍵綁定，如
       # - { when: has_menu, accept: apostrophe, send: '3' }  # 單引號3選
+      - { when: has_menu, accept: Shift+BackSpace, send_sequence: "{Control+Left}{BackSpace}{Control+Right}" }
   bindings:
     __patch:
       - :/key_binder/custom_bindings?
@@ -318,9 +319,6 @@ key_binder:
       - moran:/key_bindings/moran_switches
       - moran:/key_bindings/moran_keypad
       - moran:/key_bindings/moran_toggle_inflexible
-      # 大寫字母追加輔助碼到上一音節
-      # 該功能可使用 Shift-tab 替代
-      # - moran:/key_bindings/moran_capital_for_last_syllable
 
 recognizer:
   import_preset: default

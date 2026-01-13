@@ -24,6 +24,15 @@ local kReject = 0
 local kAccepted = 1
 local kNoop = 2
 
+local function debug_log(env, msg)
+   if not env.debug_capital_append then
+      return
+   end
+   if log and log.error then
+      log.error(msg)
+   end
+end
+
 local function semicolon_processor(key_event, env)
    local context = env.engine.context
 
@@ -167,6 +176,96 @@ local function force_segmentation_processor(key_event, env)
    return kAccepted
 end
 
+-- Append uppercase letters to the previous syllable when composing Chinese input.
+-- Notes from Weasel logs (2026-01-13):
+-- - key_event for Shift+K arrives as keycode 0x4B with shift=true; Shift alone is 0xFFE1.
+-- - ctx.input is a compact code stream without syllable separators (no spaces/apostrophes).
+-- - cand.preedit preserves syllable separators (e.g. "na li"), so we must derive the
+--   insertion point from preedit and map it to the compact input by counting A-Za-z.
+-- - When preedit is unavailable, we fall back to inserting at the last delimiter in
+--   input (rare) or appending to the end.
+local function capital_append_processor(key_event, env)
+   debug_log(env, ("capital_append: keycode=0x%X shift=%s ctrl=%s"):format(
+      key_event.keycode,
+      tostring(key_event:shift()),
+      tostring(key_event:ctrl())
+   ))
+   if key_event:ctrl() then
+      debug_log(env, "capital_append: skip (ctrl)")
+      return kNoop
+   end
+
+   local code = key_event.keycode
+   local is_upper = code >= 0x41 and code <= 0x5A
+   local is_lower = code >= 0x61 and code <= 0x7A
+   if not (is_upper or is_lower) then
+      debug_log(env, "capital_append: skip (not letter)")
+      return kNoop
+   end
+   if is_lower and not key_event:shift() then
+      debug_log(env, "capital_append: skip (lower without shift)")
+      return kNoop
+   end
+
+   local ctx = env.engine.context
+
+   local input = ctx.input
+   if not input or input == "" then
+      debug_log(env, "capital_append: skip (empty input)")
+      return kNoop
+   end
+
+   if input:find("^[A-Z]") then
+      debug_log(env, ("capital_append: skip (leading uppercase), input=%q"):format(input))
+      return kNoop
+   end
+
+   local insert_pos = nil
+   local composition = ctx.composition
+   if not composition:empty() then
+      local seg = composition:back()
+      local cand = seg:get_selected_candidate()
+      if cand and cand.preedit then
+         local preedit = cand.preedit
+         debug_log(env, ("capital_append: preedit=%q"):format(preedit))
+         local last_delim = preedit:match(".*()[ ']")
+         if last_delim then
+            local prefix = preedit:sub(1, last_delim - 1)
+            local count = 0
+            for _ in prefix:gmatch("[A-Za-z]") do
+               count = count + 1
+            end
+            if count > 0 and count < #input then
+               insert_pos = count
+               debug_log(env, ("capital_append: insert_pos from preedit=%d"):format(insert_pos))
+            else
+               debug_log(env, ("capital_append: preedit count out of range=%d input_len=%d"):format(count, #input))
+            end
+         else
+            debug_log(env, "capital_append: no delimiter in preedit")
+         end
+      else
+         debug_log(env, "capital_append: no candidate/preedit")
+      end
+   end
+
+   local ch = string.char(is_upper and (code + 32) or code)
+   if insert_pos == nil then
+      local last_delim = input:match(".*()[ ']")
+      if last_delim then
+         insert_pos = last_delim - 1
+         debug_log(env, ("capital_append: insert_pos from input_delim=%d"):format(insert_pos))
+      else
+         insert_pos = #input
+         debug_log(env, ("capital_append: insert_pos append=%d"):format(insert_pos))
+      end
+   end
+
+   ctx.input = input:sub(1, insert_pos) .. ch .. input:sub(insert_pos + 1)
+   debug_log(env, ("capital_append: input=%q -> %q"):format(input, ctx.input))
+   return kAccepted
+end
+
 local shorthands = {
    [string.byte("B")] = function(env, s)
       return s .. "不" .. s
@@ -223,6 +322,8 @@ return {
       if env.engine.schema.config:get_bool("moran/shorthands") then
          table.insert(env.processors, shorthand_processor)
       end
+      env.debug_capital_append = false
+      table.insert(env.processors, capital_append_processor)
    end,
 
    fini = function(env)
