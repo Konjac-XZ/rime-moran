@@ -59,7 +59,7 @@ Game Boy Color	GameBoyColor
 Joy Boy	JoyBoy
 Anti-lock Braking System	Anti-lockBrakingSystem
 Gif Brewery	GifBrewery
-Protocol Buffers	ProtocolBuffers
+ProtocolGuard	ProtocolGuard
 Federal Bureau of Investigation	FederalBureauofInvestigation
 International Business Machines	InternationalBusinessMachines
 Video CD	VideoCD
@@ -21484,6 +21484,8 @@ futurity	futurity
 fuze	fuze
 fuzee	fuzee
 fuzz	fuzz
+fuzzer	fuzzer
+fuzzing	fuzzing
 fuzzy	fuzzy
 FYI	FYI
 fyke	fyke
@@ -55449,6 +55451,7 @@ Vulgate	Vulgate
 vulgate	vulgate
 vulgus	vulgus
 vulnerable	vulnerable
+vulnerability	vulnerability
 vulnerary	vulnerary
 Vulpecula	Vulpecula
 vulpine	vulpine

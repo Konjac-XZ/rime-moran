@@ -4,7 +4,7 @@ patch:
   "style/layout/hilite_spacing": 10
   "style/hover_type": none
   # "style/layout/hilite_padding": 5
-  "style/layout/min_height": 0
+  "style/layout/min_height": 380
   "style/candidate_abbreviate_length": 0
   "schema/half_icon": "icons/half.ico"
   "style/comment_font_point": 12
