@@ -1,14 +1,13 @@
 schema:
   schema_id: moran_sentence
-  name: 魔然·整句
+  name: 整句·魔然
   version: "20250418"
   author:
     - 自然碼發明人：周志農
     - 方案製作：ksqsf
   description: |
-    無簡快碼的輸入純粹整句輸入模式。
+    無簡快碼的純粹整句輸入方案。
   dependencies:
-    - tiger
     - moran_charset
     - moran_english
     #- moran_japanese
@@ -33,6 +32,8 @@ switches:
     states: [ 🈚, 🈶 ]
   - name: chaifen
     states: [ 不拆, 扌斥 ]
+  - name: pinyinhint
+    states: [ 🔇, 🔊 ]
   - name: unicode_comment
     states: [ U開, U關 ]
   - options: [ std_opencc,  std_tw, std_hk, std_dzing ]
@@ -68,15 +69,22 @@ engine:
     #- table_translator@english             # 英語混輸
     #- table_translator@japanese            # 日語混輸
     - script_translator
+    - lua_translator@*moran_shijian        # 日期orq 節氣ojq 星期oxq 時間osj
+    - lua_translator@*moran_number         # 數字轉大寫, 大寫S引導, 如 S123
+    - lua_translator@*moran_unicode        # Unicode輸入, 大寫U引導, 如 U9b54
   filters:
     #- lua_filter@*moran_hint_filter           # 輔助碼提示需要去掉本行開頭的 # 符號
     - lua_filter@*moran_charset_filter     # 字集過濾需要去掉本行開頭的 # 符號
     - simplifier@chaifen
+    - simplifier@pinyinhint
     - simplifier@emoji
     - simplifier
     - simplifier@std_tw
     - simplifier@std_hk
     - simplifier@std_dzing
+    - lua_filter@*moran_charset_comment_filter  # Unicode 區位提示
+    - lua_filter@*moran_unicode_display_filter  # Unicode 編碼提示
+    - lua_filter@*moran_english_filter
     - uniquifier
 
 speller:
@@ -92,7 +100,7 @@ speller:
 
 translator:
   dictionary: moran.extended
-  prism: moran_sentence
+  prism: moran
   initial_quality: 5
   preedit_format:
     - xform/([a-z][a-z][a-z][a-z])o/$1°/
@@ -147,6 +155,14 @@ emoji:
   opencc_config: moran_emoji.json
   option_name: emoji
   tips: all
+
+pinyinhint:
+  option_name: pinyinhint
+  opencc_config: moran_pinyinhint.json
+  tips: char
+  show_in_comment: true
+  comment_format:
+    __include: :/chaifen/comment_format
 
 std_hk:
   opencc_config: t2hk.json
@@ -217,21 +233,12 @@ reverse_bopomofo:
   preedit_format:
     - xform/^o(lf|bh|cj|vy)//
     - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
+  __include: reverse_format
 
 reverse_tick:
   __include: reverse_zrlf
   tag: reverse_tick
   prefix: "`"
-
-reverse_lookup:
-  extra_tags:
-    - reverse_tick
-    - reverse_universal
-    - reverse_tiger
-    - reverse_stroke
-    - reverse_cangjie5
-    - reverse_zrlf
-    - reverse_bopomofo
 
 punctuator:
   import_preset: symbols
@@ -255,6 +262,10 @@ key_binder:
 recognizer:
   import_preset: default
   patterns:
+    unicode: "^U[a-fA-F0-9]+"
+    number: "^S[0-9]+"
+    shijian: "^N[0-9]+"
+    uppercase: "[A-Z][-_+.'A-Za-z]*$"
     punct: '^/([0-9]0?|[A-Za-z]+)$'
     reverse_universal: "(^(`[a-z`]+))|(^([a-z]{2}(`[a-z`]?|[a-z`]`))|^([a-z]{4}`))"
     reverse_tick: "(^`$)|(^`[a-zA-Z]+$)"
@@ -281,3 +292,5 @@ moran:
 
 # 默認啓用語言模型
 __include: moran:/octagram/enable_for_sentence
+
+__patch: moran_sentence.custom:/patch?

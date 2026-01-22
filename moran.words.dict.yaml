@@ -4,7 +4,7 @@
 
 ---
 name: moran.words
-version: "20240616"
+version: "20260121"
 sort: by_weight
 use_preset_vocabulary: false
 columns:
@@ -3518,7 +3518,6 @@ columns:
 暴恐	1
 晓之以理	1
 晓岚	1
-曱甴	10000	ga;aa za;aa
 曲种	1
 曲线救国	1
 曲里八拐	1
@@ -8994,8 +8993,8 @@ columns:
 意符链	1
 后设叙事	1
 能指浮动	1
-干昆	1	qm;uq kp;uk
-干昆智驾	1	qm;uq kp;uk vi;ov jw;mj
+乾崑	1	qm;uq kp;uk
+乾崑智驾	1	qm;uq kp;uk vi;ov jw;mj
 调校	811
 物理机	100
 实体机	100
@@ -9146,6 +9145,184 @@ columns:
 顷刻炼化	10
 调包侠	10	dc;yv bk;gs xw;rj
 卫藏	10	wz;xi zh;cg
+电诈	10
+提拎	5
+怒退	10
+广辞苑	10
+爱发电	10
+金拱门	10
+霸王茶姬	10
+茶姬	1
+遇事不决	1
+掺入	20
+羼入	10
+寄己	10
+并发队列	100
+打斗云	1
+闪传	100
+教资	100
+叶音	100	xx;ku yn;lo
+下播	100
+上播	100
+主包	100
+红尾水鸲	10
+宏伟水渠	0
+肥啾	100
+龟男	10
+预载	100
+胶佬	100
+淤堵	100
+格罗滕迪克	100
+欧耶	100
+油泼	100
+干拌	100
+前肘
+后肘
+后蹄
+血脖
+干禄	1
+干禄字书	100
+智驾	500
+亚比	10
+古着	100
+盯鞋
+瞪鞋
+数摇
+锐舞
+鞑靼利亚
+碣石
+文能提笔安天下
+武能上马定乾坤
+厄加勒斯
+科里奥利
+科里奥利力
+达朗贝尔
+达朗贝尔力
+吕萨克
+萨伐尔
+格兰阴性
+赶得上
+星象馆
+淇淋
+麦淇淋
+闻弦歌
+闻弦音
+知雅意
+闻弦歌而知雅意
+闻弦音而知雅意
+睹远物
+知情意
+睹远物而知情意
+回坑
+核诡
+核心诡计
+时间诡计
+空间诡计
+颜色诡计
+隐藏诡计
+多重诡计
+身份置换
+分饰身份
+乐不思	100
+晕碳	100
+描改	100
+鹓鶵	5
+颠勺	100
+奥客
+沤客
+噔噔咚
+任意大
+任意小
+本征态
+刘维尔
+施图姆
+十瓦	10
+百瓦	10
+厘瓦	10
+智谱清言	100
+仲麻吕
+阿倍仲麻吕
+矧可射思	1	uf;uy ke;dk yi;uc si;xt
+杀孽	5
+弑师	5
+审丑	10
+骂仗	100
+原乐	10
+滂臭	10
+班味	100
+诱受	10
+曲屏	10
+市盈	100
+脱字符	100
+乩身
+巴扬
+鲸凉鹤
+清凉鹤
+简单鹤
+脱字符
+棠棣之花
+具身智能
+低重
+盘前	10
+淬毒	10
+麻椒	100
+助听	1000
+耳甲艇
+耳轮结节
+耳轮尾
+屏间
+切迹
+屏间切迹
+屏上切迹
+耳轮脚
+耳甲腔
+轮屏切迹
+社管	1000
+化竞	100
+数竞	100
+物竞	100
+信竞	100
+生竞	100
+钝感	500
+能多益
+意榛滋
+榛子酱
+上位替代
+下位替代
+上位替代品
+下位替代品
+祇树	1	qi;uu uu;mc
+给孤独园	1	ji;sh gu;zg du;qu yr;ky
+祇树给孤独园	1	qi;uu uu;mc ji;sh gu;zg du;qu yr;ky
+祇园	1	qi;uu yr;ky
+祇陀林	1	qi;uu to;et ln;mm
+后验	100
+无邪气	20
+会饮篇	1
+青千	1
+海优	1
+杰青	1
+优青	1
+青基	1
+着气	1	vo;yo qi;qm
+天菜	10
+发圈束	1
+大肠发圈	1
+大肠圈	1
+黑盯	1
+破鼎	10
+射覆	1
+鹊鸲	1
+双列	1000
+爨体	1
+爨体字	1
+胡青	100
+焚诀	100
+玄猫	100
+犯蠢	10000
+印钱	100
+浮盈	100
+浮亏	100
 
 # Mini Lyre Dict
 # https://github.com/rimeinn/Lyre/commit/c020d23d334aec77a59b1d5a5b3bcc8c07c86bd0
@@ -9327,7 +9504,8 @@ columns:
 附点
 附点四分音符
 附点音符
-复调
+复调	1
+复调	100
 复调音乐
 复合音
 复音
@@ -17403,7 +17581,6 @@ MIDI键盘	1	midi jm;jj pj;mb
 歌帆
 歌恋
 歌数
-歌流多
 歌无
 歌特
 歌玛
@@ -19376,7 +19553,6 @@ MIDI键盘	1	midi jm;jj pj;mb
 的引导
 的形状
 的彩虹
-的彼岸
 的彼方
 的彼端
 的律
@@ -22999,7 +23175,6 @@ MIDI键盘	1	midi jm;jj pj;mb
 里绘
 里罗滋
 里耶
-里脊
 里花
 里茨
 里菜
@@ -24297,8 +24472,11 @@ U盘	100	yb pj;mb
 T恤	100	T xu;xx
 T恤	100	ti xu;xx
 up主	100	up vu;dw
+QQ	100	QQ
 QQ群	100	QQ qp;yj
 QQ群	100	qq qp;yj
+QQ号	100	QQ hk;hk
+QQ号	100	qq hk;hk
 高ping	100	gk;wk ping
 高ping	100	gk;dk ping
 高ping	100	gk;wk py
@@ -24311,6 +24489,63 @@ K歌	10	kz ge;qg
 卡拉OK	10	ka;ux la;fl ou kz
 OK	10	OK
 OK	10	ou kz
+CoCo都可	10	coco du;ev ke;dk
+A站	10	A vj;lv
+B站	10	B vj;lv
+C站	10	C vj;lv
+D站	10	D vj;lv
+E站	10	E vj;lv
+F站	10	F vj;lv
+G站	10	G vj;lv
+H站	10	H vj;lv
+I站	10	I vj;lv
+J站	10	J vj;lv
+K站	10	K vj;lv
+L站	10	L vj;lv
+M站	10	M vj;lv
+N站	10	N vj;lv
+O站	10	O vj;lv
+P站	10	P vj;lv
+Q站	10	Q vj;lv
+R站	10	R vj;lv
+S站	10	S vj;lv
+T站	10	T vj;lv
+U站	10	U vj;lv
+V站	10	V vj;lv
+W站	10	W vj;lv
+X站	10	X vj;lv
+Y站	10	Y vj;lv
+Z站	10	Z vj;lv
+A盘	10	A pj;mb
+B盘	10	B pj;mb
+C盘	10	C pj;mb
+D盘	10	D pj;mb
+E盘	10	E pj;mb
+F盘	10	F pj;mb
+G盘	10	G pj;mb
+H盘	10	H pj;mb
+I盘	10	I pj;mb
+J盘	10	J pj;mb
+K盘	10	K pj;mb
+L盘	10	L pj;mb
+M盘	10	M pj;mb
+N盘	10	N pj;mb
+O盘	10	O pj;mb
+P盘	10	P pj;mb
+Q盘	10	Q pj;mb
+R盘	10	R pj;mb
+S盘	10	S pj;mb
+T盘	10	T pj;mb
+U盘	10	U pj;mb
+V盘	10	V pj;mb
+W盘	10	W pj;mb
+X盘	10	X pj;mb
+Y盘	10	Y pj;mb
+Z盘	10	Z pj;mb
+A股	10	A gu;ou
+H股	10	H gu;ou
+K线	10	K xm;sq
+K线图	10	K xm;sq tu;kh
 
 # 整句可用的无理码
 几	1	jo;yd

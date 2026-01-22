@@ -53,10 +53,9 @@ function Module.load_zrmdb()
       key = utf8.codepoint(key)
       if key and value then
          if aux_table[key] == nil then
-            aux_table[key] = value
-         else
-            aux_table[key] = aux_table[key] .. " " .. value
+            aux_table[key] = ""
          end
+         aux_table[key] = aux_table[key] .. " " .. value
       end
    end
    file:close()
@@ -106,7 +105,7 @@ function Module.drain_translation(translator, input, seg, transform)
    return results
 end
 
----Check if a Unicode codepoint is a Chinese character. Up to Unicode 15.1.
+---Check if a Unicode codepoint is a Chinese character. Up to Unicode 17.
 ---@param codepoint integer
 ---@return boolean
 function Module.unicode_code_point_is_chinese(codepoint)
@@ -120,6 +119,7 @@ function Module.unicode_code_point_is_chinese(codepoint)
       or (codepoint >= 0x30000 and codepoint <= 0x3134A)  -- ext g
       or (codepoint >= 0x31350 and codepoint <= 0x323AF)  -- ext h
       or (codepoint >= 0x2EBF0 and codepoint <= 0x2EE5F)  -- ext i
+      or (codepoint >= 0x323B0 and codepoint <= 0x3347f)  -- ext j
 end
 
 ---Get a stateful iterator of each unicode character in a string.
@@ -426,6 +426,36 @@ function Module.contains(list, item)
       end
    end
    return false
+end
+
+function Module.is_reverse_lookup(env)
+   local seg = env.engine.context.composition:back()
+   if not seg then
+      return false
+   end
+   -- return seg:has_tag("reverse_tiger")
+   --    or seg:has_tag("reverse_zrlf")
+   --    or seg:has_tag("reverse_cangjie5")
+   --    or seg:has_tag("reverse_stroke")
+   --    or seg:has_tag("reverse_tick")
+
+   -- 所有反查都不過濾：
+   for tag, _ in pairs(seg.tags) do
+      if tag:match("^reverse_") then
+         return true
+      end
+   end
+   return false
+end
+
+function Module.Thunk(functor)
+   local result = nil
+   return function()
+      if result == nil then
+         result = functor()
+      end
+      return result
+   end
 end
 
 return Module

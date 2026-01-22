@@ -2,7 +2,7 @@
 -- Synopsis: 適用於魔然方案默認模式的按鍵處理器
 -- Author: ksqsf
 -- License: MIT license
--- Version: 0.4.1
+-- Version: 0.4.4
 
 -- 主要功能：
 -- 1. 選擇第二個首選項，但可用於跳過 emoji 濾鏡產生的候選
@@ -11,6 +11,9 @@
 -- 4. shorthand 略碼
 
 -- ChangeLog:
+--  0.4.4: 允許 Ctrl+L 拆開四碼
+--  0.4.3: 修復 Ctrl+L 的單字判別條件
+--  0.4.2: 放鬆取出輔助碼的條件，Ctrl+O 用於取出輔助碼
 --  0.4.1: Ctrl+L 增加對 yyxxo 的支持
 --  0.4.0: 增加固定格式略碼功能
 --  0.3.0: 增加取出/放回被吞掉的輔助碼的能力
@@ -74,8 +77,7 @@ local function semicolon_processor(key_event, env)
    while i < page_size do
       local cand = menu:get_candidate_at(i)
       if cand == nil then
-         context:select(1)
-         return kNoop
+         break
       end
       local cand_text = cand.text
       local codepoint = utf8.codepoint(cand_text, 1)
@@ -100,7 +102,8 @@ end
 -- 例如，想輸入「沒法動」，鍵入 mz'fa'dsl，但輸出是「沒發動」。
 -- 此時若選了「沒法」二字，d 會被吞掉。按下該處理器的快捷鍵，可以把 d 再次偷出來。
 local function steal_auxcode_processor(key_event, env)
-   if not (key_event:ctrl() and key_event.keycode == 0x6c) then
+   -- ctrl+l, ctrl+o
+   if not (key_event:ctrl() and (key_event.keycode == 0x6c or key_event.keycode == 0x6f)) then
       return kNoop
    end
 
@@ -124,7 +127,7 @@ local function steal_auxcode_processor(key_event, env)
       return kNoop
    end
    local stealee_cand = stealee:get_selected_candidate()
-   local auxcode = stealee_cand.preedit:match("[a-z][a-z][ '][a-z][a-z]([a-z])")
+   local auxcode = stealee_cand.preedit:match("[a-z][a-z][a-z]?([a-z])$")
    if not auxcode then
       return kNoop
    end
@@ -155,14 +158,8 @@ local function force_segmentation_processor(key_event, env)
 
    local raw = input:gsub("'", "")  -- 不帶 ' 分隔符的輸入
 
-   if input:match("^[a-z][a-z][a-z][a-z]o") then
+   if input:match("^[a-z][a-z][a-z][a-z]o$") then
       ctx.input = ctx.input:sub(1, seg._start) .. raw:sub(1,2) .. "'" .. raw:sub(3,5) .. ctx.input:sub(seg._end + 1, -1)
-   elseif preedit:match("^[a-z][a-z][ '][a-z][a-z][a-z]$") or input:match("^[a-z][a-z]'[a-z][a-z][a-z]$") then  -- 2-3
-      ctx.input = ctx.input:sub(1, seg._start) .. raw:sub(1,3) .. "'" .. raw:sub(4,5) .. ctx.input:sub(seg._end + 1, -1)
-   elseif preedit:match("^[a-z][a-z][a-z][ '][a-z][a-z]$") or input:match("^[a-z][a-z][a-z]'[a-z][a-z]$") then  -- 3-2
-      ctx.input = ctx.input:sub(1, seg._start) .. raw:sub(1,2) .. "'" .. raw:sub(3,5) .. ctx.input:sub(seg._end + 1, -1)
-   elseif preedit:match("^[a-z][a-z][a-z][ '][a-z][a-z][a-z]$") or input:match("^[a-z][a-z][a-z]'[a-z][a-z][a-z]$") then -- 3-3
-      ctx.input = ctx.input:sub(1, seg._start) .. raw:sub(1,2) .. "'" .. raw:sub(3,4) .. "'" .. raw:sub(5,6) .. ctx.input:sub(seg._end + 1, -1)
    elseif preedit:match("^[a-z][a-z][ '][a-z][a-z][ '][a-z][a-z]$") or input:match("^[a-z][a-z]'[a-z][a-z]'[a-z][a-z]$") then  -- 2-2-2
       ctx.input = ctx.input:sub(1, seg._start) .. raw:sub(1,3) .. "'" .. raw:sub(4,6) .. ctx.input:sub(seg._end + 1, -1)
    elseif preedit:match("^[a-z][a-z][ '][a-z][a-z][ '][a-z][a-z][a-z]$") or input:match("^[a-z][a-z]'[a-z][a-z]'[a-z][a-z][a-z]$") then  -- 2-2-3
@@ -171,6 +168,18 @@ local function force_segmentation_processor(key_event, env)
       ctx.input = ctx.input:sub(1, seg._start) .. raw:sub(1,3) .. "'" .. raw:sub(4,5) .. "'" .. raw:sub(6,7) .. ctx.input:sub(seg._end + 1, -1)
    elseif preedit:match("^[a-z][a-z][a-z][ '][a-z][a-z][ '][a-z][a-z]$") or input:match("^[a-z][a-z][a-z]'[a-z][a-z]'[a-z][a-z]$") then  -- 3-2-2
       ctx.input = ctx.input:sub(1, seg._start) .. raw:sub(1,2) .. "'" .. raw:sub(3,4) .. "'" .. raw:sub(5,7) .. ctx.input:sub(seg._end + 1, -1)
+   elseif preedit:match("^[a-z][a-z][ '][a-z][a-z][a-z]$") or input:match("^[a-z][a-z]'[a-z][a-z][a-z]$") then  -- 2-3
+      ctx.input = ctx.input:sub(1, seg._start) .. raw:sub(1,3) .. "'" .. raw:sub(4,5) .. ctx.input:sub(seg._end + 1, -1)
+   elseif preedit:match("^[a-z][a-z][a-z][ '][a-z][a-z]$") or input:match("^[a-z][a-z][a-z]'[a-z][a-z]$") then  -- 3-2
+      ctx.input = ctx.input:sub(1, seg._start) .. raw:sub(1,2) .. "'" .. raw:sub(3,5) .. ctx.input:sub(seg._end + 1, -1)
+   elseif preedit:match("^[a-z][a-z][a-z][ '][a-z][a-z][a-z]$") or input:match("^[a-z][a-z][a-z]'[a-z][a-z][a-z]$") then -- 3-3
+      ctx.input = ctx.input:sub(1, seg._start) .. raw:sub(1,2) .. "'" .. raw:sub(3,4) .. "'" .. raw:sub(5,6) .. ctx.input:sub(seg._end + 1, -1)
+   elseif preedit:match("^[a-z][a-z][a-z][a-z]$") then
+      ctx.input = raw:sub(1, 2) .. "'" .. raw:sub(3,4)
+   elseif ctx.input:match("^[a-z][a-z]'[a-z][a-z]$") then
+      ctx.input = raw
+   else
+      return kNoop
    end
 
    return kAccepted
@@ -284,7 +293,7 @@ local shorthands = {
       end
    end,
    [string.byte("Q")] = function(env, s)
-      if (env.engine.context:get_option("traditionalization") == false) then
+      if (env.engine.context:get_option("simplification") == true) then
          return s .. "来" .. s .. "去"
       else
          return s .. "來" .. s .. "去"
@@ -315,8 +324,8 @@ return {
    init = function(env)
       env.processors = {
          semicolon_processor,
-         steal_auxcode_processor,
          force_segmentation_processor,
+         steal_auxcode_processor,
       }
 
       if env.engine.schema.config:get_bool("moran/shorthands") then
