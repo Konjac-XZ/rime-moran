@@ -30,3 +30,4 @@ moran.userdb.old/*
 
 **/*.txt
 convert_uppercase.py
+user.yaml
