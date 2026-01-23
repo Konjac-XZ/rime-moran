@@ -94,6 +94,7 @@ engine:
     - lua_filter@*moran_reorder_filter
     - lua_filter@*moran_ijrq_filter
     - lua_filter@*moran_hint_filter
+    - lua_filter@*moran_english_filter
     - simplifier@emoji
     - simplifier@chaifen
     - simplifier@pinyinhint
