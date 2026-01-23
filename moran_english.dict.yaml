@@ -73,7 +73,10 @@ Grand Central Dispatch	GrandCentralDispatch
 Online Certificate Status Protocol	OnlineCertificateStatusProtocol
 BNB Chain	BNBChain
 Aeron Chair	AeronChair
+KLEE	klee
 Non-Player Character	Non-PlayerCharacter
+non-compliance	noncompliance
+ProtoXploit	protoxploit
 Optical Character Recognition	OpticalCharacterRecognition
 OpenAI ChatGPT	OpenAIChatGPT
 Simplified Chinese	SimplifiedChinese
@@ -359,6 +362,8 @@ New Zealander	NewZealander
 Better Zip	BetterZip
 a11y	a11y
 A4	A4
+AFL	AFL
+AFL	AFL++
 Aachen	Aachen
 Aalborg	Aalborg
 Aalesund	Aalesund
@@ -18984,6 +18989,7 @@ explicative	explicative
 explicit	explicit
 explode	explode
 exploit	exploit
+exploitability	exploitability
 exploitation	exploitation
 exploiter	exploiter
 exploration	exploration
@@ -30688,8 +30694,6 @@ lexis	lexis
 ley	ley
 Leyden	Leyden
 Leyte	Leyte
-LGBT	LGBT
-LGPL	LGPL
 Lhasa	Lhasa
 liabilities	liabilities
 liability	liability
