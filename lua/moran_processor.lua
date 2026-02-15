@@ -36,6 +36,21 @@ local function debug_log(env, msg)
    end
 end
 
+-- Temporary trace log for diagnosing capital_append behavior.
+local function trace_log(msg)
+   if log and log.error then
+      log.error("[moran_processor.trace] " .. msg)
+   end
+end
+
+local function safe_key_repr(key_event)
+   local ok, repr = pcall(function() return key_event:repr() end)
+   if ok and repr then
+      return repr
+   end
+   return "<no-repr>"
+end
+
 local function semicolon_processor(key_event, env)
    local context = env.engine.context
 
@@ -185,7 +200,7 @@ local function force_segmentation_processor(key_event, env)
    return kAccepted
 end
 
--- Append uppercase letters to the previous syllable when composing Chinese input.
+-- Append typed letters to the previous syllable when composing Chinese input.
 -- Notes from Weasel logs (2026-01-13):
 -- - key_event for Shift+K arrives as keycode 0x4B with shift=true; Shift alone is 0xFFE1.
 -- - ctx.input is a compact code stream without syllable separators (no spaces/apostrophes).
@@ -193,13 +208,30 @@ end
 --   insertion point from preedit and map it to the compact input by counting A-Za-z.
 -- - When preedit is unavailable, we fall back to inserting at the last delimiter in
 --   input (rare) or appending to the end.
+-- Lessons from logs (2026-02-14):
+-- - Hidden assumption #1 (wrong): seg:has_tag("english") can decide if we should
+--   preserve typed uppercase.
+--   Conflict: recognizer_secondary can tag lowercase Chinese-code inputs as english
+--   (e.g. "nihk"), which made Shift+Letter append uppercase in Chinese flow.
+--   Resolution: decide by input prefix casing (starts_with_upper) instead.
+-- - Hidden assumption #2 (partially wrong): key_event.keycode casing always reflects
+--   user intent directly.
+--   Conflict: frontend-specific key events and Shift combinations can produce
+--   surprising keycode patterns; we keep trace logs for this path.
 local function capital_append_processor(key_event, env)
+   trace_log(("enter keycode=0x%X shift=%s ctrl=%s repr=%q"):format(
+      key_event.keycode,
+      tostring(key_event:shift()),
+      tostring(key_event:ctrl()),
+      safe_key_repr(key_event)
+   ))
    debug_log(env, ("capital_append: keycode=0x%X shift=%s ctrl=%s"):format(
       key_event.keycode,
       tostring(key_event:shift()),
       tostring(key_event:ctrl())
    ))
    if key_event:ctrl() then
+      trace_log("skip: ctrl")
       debug_log(env, "capital_append: skip (ctrl)")
       return kNoop
    end
@@ -207,11 +239,16 @@ local function capital_append_processor(key_event, env)
    local code = key_event.keycode
    local is_upper = code >= 0x41 and code <= 0x5A
    local is_lower = code >= 0x61 and code <= 0x7A
+   trace_log(("classify code=0x%X is_upper=%s is_lower=%s shift=%s"):format(
+      code, tostring(is_upper), tostring(is_lower), tostring(key_event:shift())
+   ))
    if not (is_upper or is_lower) then
+      trace_log("skip: not letter")
       debug_log(env, "capital_append: skip (not letter)")
       return kNoop
    end
    if is_lower and not key_event:shift() then
+      trace_log("skip: lowercase without shift")
       debug_log(env, "capital_append: skip (lower without shift)")
       return kNoop
    end
@@ -220,12 +257,8 @@ local function capital_append_processor(key_event, env)
 
    local input = ctx.input
    if not input or input == "" then
+      trace_log("skip: empty input")
       debug_log(env, "capital_append: skip (empty input)")
-      return kNoop
-   end
-
-   if input:find("^[A-Z]") then
-      debug_log(env, ("capital_append: skip (leading uppercase), input=%q"):format(input))
       return kNoop
    end
 
@@ -258,7 +291,21 @@ local function capital_append_processor(key_event, env)
       end
    end
 
-   local ch = string.char(is_upper and (code + 32) or code)
+   -- Preserve typed case only when the whole input starts with uppercase.
+   -- This intentionally avoids using seg:has_tag("english"): logs show that tag can
+   -- be true for lowercase Chinese-code inputs due to secondary recognizer rules.
+   -- Otherwise keep Chinese aux append behavior (append lowercase).
+   local starts_with_upper = input:find("^[A-Z]") ~= nil
+   local base = string.char(is_upper and code or (code - 32))
+   local ch = nil
+   if starts_with_upper then
+      ch = key_event:shift() and base or string.lower(base)
+   else
+      ch = string.lower(base)
+   end
+   trace_log(("compose code=0x%X base=%q ch=%q shift=%s starts_with_upper=%s input_before=%q"):format(
+      code, base, ch, tostring(key_event:shift()), tostring(starts_with_upper), input
+   ))
    if insert_pos == nil then
       local last_delim = input:match(".*()[ ']")
       if last_delim then
@@ -271,6 +318,7 @@ local function capital_append_processor(key_event, env)
    end
 
    ctx.input = input:sub(1, insert_pos) .. ch .. input:sub(insert_pos + 1)
+   trace_log(("apply insert_pos=%d input_after=%q"):format(insert_pos, ctx.input))
    debug_log(env, ("capital_append: input=%q -> %q"):format(input, ctx.input))
    return kAccepted
 end
@@ -331,7 +379,10 @@ return {
       if env.engine.schema.config:get_bool("moran/shorthands") then
          table.insert(env.processors, shorthand_processor)
       end
-      env.debug_capital_append = false
+      env.debug_capital_append = env.engine.schema.config:get_bool("moran/debug_capital_append") or false
+      if env.debug_capital_append and log and log.error then
+         log.error("[moran_processor] debug_capital_append enabled")
+      end
       table.insert(env.processors, capital_append_processor)
    end,
 
