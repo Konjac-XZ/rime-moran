@@ -1,0 +1,23 @@
+# 规范化：在任何地方都以 LF 存储和检出文本
+* text=auto eol=lf
+
+# 为你的常见源码/配置/文档明确指定文本（LF）
+*.sh   text eol=lf
+*.py   text eol=lf
+*.lua  text eol=lf
+*.md   text eol=lf
+*.txt  text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+
+# 二进制资产（绝不进行行尾转换）
+*.png  -text
+*.ico  -text
+*.bin  -text
+*.swp  -text
+
+# 如果以下任何文件在你的仓库中确实是二进制文件，也请将其添加到此处：
+*.ldb  -text
+*.ocd2 -text
