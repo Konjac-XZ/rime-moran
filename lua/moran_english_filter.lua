@@ -54,13 +54,6 @@ local function debug_log(env, msg)
    end
 end
 
--- Temporary trace log for diagnosing preedit/case behavior.
-local function trace_log(msg)
-   if log and log.error then
-      log.error("[moran_english_filter.trace] " .. msg)
-   end
-end
-
 local function safe_preedit(cand)
    local ok, v = pcall(function() return cand.preedit end)
    if ok then
@@ -69,12 +62,20 @@ local function safe_preedit(cand)
    return "<preedit-read-failed>"
 end
 
+-- | Check if @s is proper: contains at least one capital letter.
+--
+-- @param s str
+-- @return true if proper; false otherwise
+local function str_is_proper(s)
+   return s:find(PAT_UPPERCASE) ~= nil
+end
+
 -- | Check if @s is an English word.
 --
 -- @param s str
 -- @return true if it can be considered an English word
 local function str_is_english_word(s)
-   return s:find(PAT_ENGLISH_WORD) ~= nil
+    return s:find(PAT_ENGLISH_WORD) ~= nil
 end
 
 local function str_has_uppercase(s)
@@ -112,7 +113,7 @@ end
 
 -- | A fast check on the first byte of the string.
 local function not_filterable(s)
-   return #s > 0 and s:byte(1) >= 128
+    return #s > 0 and s:byte(1) >= 128
 end
 
 local function force_preedit(cand, preedit)
@@ -173,39 +174,32 @@ function Module.func(t_input, env)
    end
 
    local input = segmentation.input:sub(seg._start + 1, seg._end + 1)
+   if not str_is_proper(input) then
+      moran.yield_all(iter)
+      return
+   end
    debug_log(env, ("input=%q segment=[%d,%d]"):format(
       input, seg._start, seg._end
    ))
 
    local seen = {}
    local function emit_fixed(c, source, idx)
-      trace_log(("%s cand#%d in text=%q type=%q preedit=%q"):format(
-         source, idx, tostring(c.text), tostring(c.type), safe_preedit(c)
-      ))
       if not_filterable(c.text) or not str_is_english_word(c.text) then
          local dedup_key = "raw\0" .. c.text
          if seen[dedup_key] then
             debug_log(env, ("%s cand#%d dedup(raw): %q"):format(source, idx, c.text))
-            trace_log(("%s cand#%d drop dedup(raw) text=%q"):format(source, idx, tostring(c.text)))
             return false
          end
          seen[dedup_key] = true
          debug_log(env, ("%s cand#%d keep(non_filterable/non_english): %q"):format(source, idx, c.text))
-         trace_log(("%s cand#%d out(raw) text=%q preedit=%q"):format(
-            source, idx, tostring(c.text), safe_preedit(c)
-         ))
          yield(c)
          return true
       end
 
       local fixed_text = fix_case(c.text, input)
-      trace_log(("%s cand#%d fix_case text=%q -> %q input=%q"):format(
-         source, idx, tostring(c.text), tostring(fixed_text), tostring(input)
-      ))
       local dedup_key = "eng\0" .. fixed_text
       if seen[dedup_key] then
          debug_log(env, ("%s cand#%d dedup(english): %q"):format(source, idx, fixed_text))
-         trace_log(("%s cand#%d drop dedup(english) fixed=%q"):format(source, idx, tostring(fixed_text)))
          return false
       end
       seen[dedup_key] = true
@@ -217,17 +211,7 @@ function Module.func(t_input, env)
       local out, ok, err = build_english_candidate(c, fixed_text, input)
       if not ok then
          debug_log(env, ("%s cand#%d force_preedit failed: %s"):format(source, idx, tostring(err)))
-         trace_log(("%s cand#%d build(force_preedit) FAILED err=%q out_text=%q out_preedit=%q"):format(
-            source, idx, tostring(err), tostring(out.text), safe_preedit(out)
-         ))
-      else
-         trace_log(("%s cand#%d build(force_preedit) OK out_text=%q out_preedit=%q"):format(
-            source, idx, tostring(out.text), safe_preedit(out)
-         ))
       end
-      trace_log(("%s cand#%d yield text=%q preedit=%q"):format(
-         source, idx, tostring(out.text), safe_preedit(out)
-      ))
       yield(out)
       return true
    end
@@ -245,7 +229,6 @@ function Module.func(t_input, env)
    local folded_input = casefold_ascii(input)
    if str_has_uppercase(input) and folded_input ~= input and env.english_translator ~= nil then
       debug_log(env, ("fallback query: input=%q folded=%q"):format(input, folded_input))
-      trace_log(("fallback begin input=%q folded=%q"):format(tostring(input), tostring(folded_input)))
       local fallback_iter = moran.query_translation(env.english_translator, folded_input, seg)
       for c in fallback_iter do
          fallback_scanned = fallback_scanned + 1
@@ -253,15 +236,15 @@ function Module.func(t_input, env)
             kept = kept + 1
          end
       end
-      trace_log(("fallback end scanned=%d"):format(fallback_scanned))
    end
 
-   trace_log(("summary input=%q kept=%d primary=%d fallback=%d"):format(
-      tostring(input), kept, primary_scanned, fallback_scanned
-   ))
    debug_log(env, ("summary input=%q kept=%d scanned(primary=%d,fallback=%d)"):format(
       input, kept, primary_scanned, fallback_scanned
    ))
 end
 
 return Module
+
+-- Local Variables:
+-- lua-indent-level: 4
+-- End:
