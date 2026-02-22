@@ -509,21 +509,131 @@ local function charset_filter(input)
    end
 end
 
+-- Fast path for charset comments:
+-- 1) Build a sorted range index once.
+-- 2) Cache codepoint -> charset label lookup.
+-- 3) Cache text -> uniform charset label (or false) with a size cap.
+local charset_ranges = nil
+local charset_by_codepoint = {}
+local charset_by_text = {}
+local charset_by_text_size = 0
+local charset_by_text_cap = 4096
+
+local function ensure_charset_ranges()
+  if charset_ranges ~= nil then
+    return
+  end
+  local ranges = {}
+  for name, range in pairs(charset) do
+    local first = range.first
+    local last = range.last
+    if type(first) == "number" and type(last) == "number" then
+      if first > last then
+        first, last = last, first
+      end
+      ranges[#ranges + 1] = { name = name, first = first, last = last }
+    end
+  end
+  table.sort(ranges, function(a, b)
+    if a.first == b.first then
+      return a.last < b.last
+    end
+    return a.first < b.first
+  end)
+  charset_ranges = ranges
+end
+
+local function find_charset_by_codepoint(cp)
+  local cached = charset_by_codepoint[cp]
+  if cached ~= nil then
+    return cached ~= false and cached or nil
+  end
+
+  ensure_charset_ranges()
+  local lo, hi = 1, #charset_ranges
+  local idx = 0
+  while lo <= hi do
+    local mid = math.floor((lo + hi) / 2)
+    if charset_ranges[mid].first <= cp then
+      idx = mid
+      lo = mid + 1
+    else
+      hi = mid - 1
+    end
+  end
+
+  local found = nil
+  for i = idx, 1, -1 do
+    local range = charset_ranges[i]
+    if range.last < cp then
+      break
+    end
+    if cp >= range.first and cp <= range.last then
+      found = range.name
+      break
+    end
+  end
+
+  charset_by_codepoint[cp] = found or false
+  return found
+end
+
+local function cache_charset_by_text(text, label)
+  if charset_by_text[text] == nil then
+    charset_by_text_size = charset_by_text_size + 1
+    if charset_by_text_size > charset_by_text_cap then
+      charset_by_text = {}
+      charset_by_text_size = 0
+    end
+  end
+  charset_by_text[text] = label or false
+end
+
+local function uniform_charset_for_text(text)
+  local cached = charset_by_text[text]
+  if cached ~= nil then
+    return cached ~= false and cached or nil
+  end
+
+  local label = nil
+  for _, cp in utf8.codes(text) do
+    local cur = find_charset_by_codepoint(cp)
+    if cur == nil then
+      cache_charset_by_text(text, nil)
+      return nil
+    end
+    if label == nil then
+      label = cur
+    elseif label ~= cur then
+      cache_charset_by_text(text, nil)
+      return nil
+    end
+  end
+
+  cache_charset_by_text(text, label)
+  return label
+end
+
 
 --- charset comment filter
 local function charset_comment_filter(input,env)
-  local b = env.engine.context:get_option("unicode_comment")--开关状态
-  for cand in input:iter() do
-    if b then
-     for s, r in pairs(charset) do
-       if (exists(is_charset(s), cand.text)) then
-         cand:get_genuine().comment = cand.comment .. " " .. s
-         break
-       end--if
-      end--for
-     end--if
+  local context = env.engine.context
+  local b = context:get_option("unicode_comment")--开关状态
+  local input_text = context.input
+  if not b or #input_text < 1 then
+    for cand in input:iter() do
       yield(cand)
-   end
+    end
+    return
+  end
+
+  for cand in input:iter() do
+    local label = uniform_charset_for_text(cand.text)
+    if label ~= nil then
+      cand:get_genuine().comment = cand.comment .. " " .. label
+    end
+    yield(cand)
+  end
 end
 
 

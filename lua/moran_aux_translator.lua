@@ -190,11 +190,7 @@ end
 
 function Module.func(input, seg, env)
     env.y:reset()
-
-    -- 每 10% 的翻譯觸發一次 GC
-    if math.random() < 0.1 then
-        collectgarbage()
-    end
+    -- Rely on Lua runtime GC to avoid random full-GC pauses while typing.
 
     local input_len = utf8.len(input) or 0
     if input_len <= env.char_code_len then

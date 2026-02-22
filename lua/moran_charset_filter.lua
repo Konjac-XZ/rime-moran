@@ -2,6 +2,7 @@ local moran = require("moran")
 local Top = {}
 
 local MEMO = {}
+local MEMO_SIZE = 0
 
 local kNoExclude = 0
 local kCharTrad = 1 -- t | f
@@ -72,10 +73,12 @@ function Top.CodepointInCharset(env, codepoint)
     if env.memo[codepoint] ~= nil then
         return env.memo[codepoint]
     end
-    if #env.memo > env.memo_cap then
+
+    if MEMO_SIZE > env.memo_cap then
         local cnt = 0
         for k, _ in pairs(env.memo) do
             env.memo[k] = nil
+            MEMO_SIZE = MEMO_SIZE - 1
             cnt = cnt + 1
             if cnt >= env.memo_cap / 2 then
                 break
@@ -95,7 +98,9 @@ function Top.CodepointInCharset(env, codepoint)
     elseif res == 'j' then
         res = kCharSimp
     end
+
     env.memo[codepoint] = res
+    MEMO_SIZE = MEMO_SIZE + 1
     return res
 end
 

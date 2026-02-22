@@ -136,11 +136,7 @@ end
 
 function top.func(input, seg, env)
     top.output_begin(env)
-
-    -- 每 10% 的翻譯觸發一次 GC
-    if math.random() < 0.1 then
-        collectgarbage()
-    end
+    -- Rely on Lua runtime GC to avoid random full-GC pauses while typing.
 
     local input_len = utf8.len(input)
     local inflexible = env.engine.context:get_option("inflexible")
